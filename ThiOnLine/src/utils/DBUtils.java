@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 
+import beans.LayDeThiRs;
 import beans.LopHoc;
 import beans.TaiKhoan;
 import beans.ThongTinTK;
@@ -111,4 +112,42 @@ public class DBUtils {
         pstm.setString(1, code);
         pstm.executeUpdate();
     }*/
+	 public static List<LayDeThiRs> LayDeThi(Connection conn, String MaDe) throws SQLException {
+		 	String sql = "execute pr_LayDeThi '" + MaDe +"'";
+	       PreparedStatement pstm = conn.prepareStatement(sql); 
+	       //pstm.setString(1, MaDe);
+	       ResultSet rs = pstm.executeQuery();
+	       List<LayDeThiRs> list = new ArrayList<LayDeThiRs>();
+	       while (rs.next()) {
+	            String maCauHoi = rs.getString("MaCauHoi");
+	            String noiDung = rs.getString("NoiDung");
+	            String dapAnA = rs.getString("DapAnA");
+	            String dapAnB = rs.getString("DapAnB");
+	            String dapAnC = rs.getString("DapAnC");
+	            String dapAnD = rs.getString("DapAnD");
+	            String dapAnDung = rs.getString("DapAnDung");
+	            LayDeThiRs ch = new LayDeThiRs();
+	            ch.setMaCauHoi(maCauHoi);
+	            ch.setNoiDung(noiDung);
+	            ch.setDapAnA(dapAnA);
+	            ch.setDapAnB(dapAnB);
+	            ch.setDapAnC(dapAnC);
+	            ch.setDapAnD(dapAnD);
+	            ch.setDapAnDung(dapAnDung);
+	            list.add(ch);
+	        }	        
+	        return list;
+	    }
+	 	
+	 public static String LayDapAn(Connection conn, String MaDe) throws SQLException {
+		 String sql = "execute pr_LayDapAn '" + MaDe +"'";
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 ResultSet rs = pstm.executeQuery();
+		 String dapAn = "";
+		 while(rs.next())
+		 {
+			 dapAn = rs.getString("DapAn");
+		 }
+		 return dapAn;
+	 }	 
 }
