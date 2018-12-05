@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 
+import beans.BG_DeThi;
 import beans.LayDeThiRs;
 import beans.LopHoc;
 import beans.TaiKhoan;
@@ -15,6 +16,25 @@ import beans.ThongTinTK;
 
 public class DBUtils {
 	
+	public static TaiKhoan KiemTraDangNhap(Connection conn, String tenTK, String matKhau) throws SQLException
+	{
+		String sql = "select TenTK, TenNguoiDung, Quyen from TaiKhoan where TenTK = ? and MatKhau = ?";
+		PreparedStatement pstm = conn.prepareStatement(sql); 
+	    pstm.setString(1,tenTK);
+	    pstm.setString(2,matKhau);
+	    ResultSet rs = pstm.executeQuery();
+	    if(rs.next())
+	    {
+	    	TaiKhoan tk = new TaiKhoan();
+	    	tk.setTenTK(tenTK);
+	    	String tenNguoiDung = rs.getString("TenNguoiDung");
+	    	int quyen = rs.getInt("Quyen");
+	    	tk.setTenNguoiDung(tenNguoiDung);
+	    	tk.setQuyen(quyen);
+	    	return tk;
+	    }
+		return null;
+	}
 	 public static List<ThongTinTK> LayDSNguoiDung(Connection conn) throws SQLException {
 	        String sql = "execute pr_LayDanhSachHocSinh"; 
 	        PreparedStatement pstm = conn.prepareStatement(sql); 
@@ -38,6 +58,26 @@ public class DBUtils {
 	        }
 	        return list;
 	    }
+	 
+	 public static ThongTinTK LayThongTin(Connection conn, String TenTK) throws SQLException{
+	        String sql = "select TenNguoiDung,NgaySinh,DiaChi,SDT from TaiKhoan where TenTK = ?";
+	        PreparedStatement pstm = conn.prepareStatement(sql); 
+	        pstm.setString(1, TenTK);
+	        ResultSet rs = pstm.executeQuery();
+	        ThongTinTK tk = new ThongTinTK();
+	        if (rs.next()) {
+	            String name = rs.getString("TenNguoiDung");
+	            Date ngaysinh = rs.getDate("NgaySinh");
+	            String diachi = rs.getString("DiaChi");
+	            String sdt = rs.getString("SDT");
+	            tk.setTenTK(TenTK);
+	            tk.setTenNguoiDung(name);
+	            tk.setNgaySinh(ngaysinh);
+	            tk.setDiaChi(diachi);
+	            tk.setSDT(sdt);
+	        }
+	        return tk;
+	 }
 	 
 	 public static List<LopHoc> LayDSLopHoc(Connection conn, String TenTK) throws SQLException {
 		 	String sql = "execute pr_DSLopHoc'" + TenTK + "'";
@@ -112,6 +152,28 @@ public class DBUtils {
         pstm.setString(1, code);
         pstm.executeUpdate();
     }*/
+	 public static List<BG_DeThi> LayDSDeThi(Connection conn, String tenTK) throws SQLException{
+		 List<BG_DeThi> list = new ArrayList<>();
+		 String sql = "execute pr_LayDsDeThi'" + tenTK + "'";
+	     PreparedStatement pstm = conn.prepareStatement(sql); 
+	     ResultSet rs = pstm.executeQuery();
+	     while(rs.next())
+	     {
+	    	 String maDeThi = rs.getString("MaDeThi");
+	    	 String maLop = rs.getString("maLop");
+	    	 int thoiLuong = rs.getInt("ThoiLuong");
+	    	 Date tGBatDau= rs.getDate("TGBatDau");
+	    	 Date tGKetThuc = rs.getDate("TGketThuc");
+	    	 BG_DeThi bg= new BG_DeThi();
+	    	 bg.setMaDeThi(maDeThi);
+	    	 bg.setMaLop(maLop);
+	    	 bg.setThoiLuong(thoiLuong);
+	    	 bg.setTGBatDau(tGBatDau);
+	    	 bg.setTGKetThuc(tGKetThuc);
+	    	 list.add(bg);
+	     }
+		 return list;
+	 }
 	 public static List<LayDeThiRs> LayDeThi(Connection conn, String MaDe) throws SQLException {
 		 	String sql = "execute pr_LayDeThi '" + MaDe +"'";
 	       PreparedStatement pstm = conn.prepareStatement(sql); 
@@ -138,7 +200,7 @@ public class DBUtils {
 	        }	        
 	        return list;
 	    }
-	 	
+	 
 	 public static String LayDapAn(Connection conn, String MaDe) throws SQLException {
 		 String sql = "execute pr_LayDapAn '" + MaDe +"'";
 		 PreparedStatement pstm = conn.prepareStatement(sql); 

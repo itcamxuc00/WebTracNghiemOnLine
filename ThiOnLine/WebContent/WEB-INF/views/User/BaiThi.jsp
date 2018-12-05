@@ -137,7 +137,7 @@
                                         <span>${cauhoi.dapAnA}</span>
                                     </div>
                                     <div class="answer-content">
-                                        <input data-choice="B" type="radio" name=${cauhoi.noiDung }>
+                                        <input data-choice="B" type="radio" name=${cauhoi.maCauHoi }>
                                         <span>${cauhoi.dapAnB}</span>
                                     </div>
                                     <div class="answer-content">
@@ -145,7 +145,7 @@
                                         <span>${cauhoi.dapAnC}</span>
                                     </div>
                                     <div class="answer-content">
-                                        <input data-choice="D" type="radio" name=${cauhoi.noiDung }>
+                                        <input data-choice="D" type="radio" name=${cauhoi.maCauHoi }>
                                         <span>${cauhoi.dapAnD}</span>
                                     </div>
                                 </div>

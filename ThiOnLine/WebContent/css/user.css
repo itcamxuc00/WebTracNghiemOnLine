@@ -101,7 +101,7 @@
             height: 100vh;
             width: 100%;
             position: relative;
-            background-image: url('images/background.svg'),linear-gradient(180deg,#0b3e71,#0d64b0);
+            background-image: url('background/background.svg'),linear-gradient(180deg,#0b3e71,#0d64b0);
         }
 
         .banner {
@@ -118,7 +118,7 @@
         .earth {
             width: 250px;
             height: 250px;
-            background-image: url(images/earth.png);
+            background-image: url(background/earth.png);
             background-size: cover;
         }
         .banner-item {
@@ -179,27 +179,27 @@
         }
 
         .chemistry{
-            background-image: url('images/chem.png');
+            background-image: url('background/chem.png');
         }
 
         .physical{
-            background-image: url('images/physic.svg');
+            background-image: url('background/physic.svg');
         }
 
         .math {
-            background-image: url('images/math.svg');
+            background-image: url('background/math.svg');
         }
 
         .biology {
-            background-image: url('images/biol.svg');
+            background-image: url('background/biol.svg');
         }
 
         .it {
-            background-image: url('images/it.svg');
+            background-image: url('background/it.svg');
         }
 
         .english {
-            background-image: url('images/engl.svg');
+            background-image: url('background/engl.svg');
         }
 
         #body-block .static-content {

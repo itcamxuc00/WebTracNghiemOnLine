@@ -3,7 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
- 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,22 +12,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.*;
+import beans.BG_DeThi;
+import beans.TaiKhoan;
+import beans.ThongTinTK;
 import connection.DBConnection;
 import utils.DBUtils;
 import utils.MyUtils;
 
 /**
- * Servlet implementation class NguoiDung
+ * Servlet implementation class TrangCaNhan
  */
-@WebServlet("/NguoiDung")
-public class NguoiDung extends HttpServlet {
+@WebServlet("/TrangCaNhan")
+public class TrangCaNhan extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NguoiDung() {
+    public TrangCaNhan() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,6 +38,8 @@ public class NguoiDung extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		  // Kiểm tra người dùng đã đăng nhập (login) chưa.
 		HttpSession session = request.getSession();
         TaiKhoan loginedUser = MyUtils.getLoginedUser(session);
         // Nếu chưa đăng nhập (login).
@@ -44,27 +48,22 @@ public class NguoiDung extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/Home");
             return;
         }
-        else if(loginedUser.getQuyen()<=1) response.setStatus(404); 
-        else {
-            	List<ThongTinTK> list = null;
-            	String err = "";
-            	Connection conn;
-    			try {
-    				conn = DBConnection.getMyConnection();
-    				list = DBUtils.LayDSNguoiDung(conn);
-    				err = null;
-    			}
-    				catch (Exception e) {
-    				// TODO Auto-generated catch block
-    				e.printStackTrace();
-    				err = e.getMessage();
-    				
-    			}
-    			request.setAttribute("error", err);
-    			request.setAttribute("DShocsinh", list);
-    			 RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/Admin/DSNguoiDung.jsp");
-    			 dispatcher.forward(request, response);
+        ThongTinTK thongTinTK = null;
+        List<BG_DeThi> dsDeThi = null;
+        String err = null;
+        try {
+        	Connection conn = DBConnection.getMyConnection();
+        	thongTinTK = DBUtils.LayThongTin(conn, loginedUser.getTenTK());
+        	dsDeThi = DBUtils.LayDSDeThi(conn, loginedUser.getTenTK());
+        	request.setAttribute("dsDethi", dsDeThi);
+        	request.setAttribute("user", thongTinTK);
         }
+        catch(Exception e) {
+        	err = e.getMessage();
+        }
+        request.setAttribute("error", err);
+        RequestDispatcher dispatcher  = this.getServletContext().getRequestDispatcher("/WEB-INF/views/User/TrangCaNhan.jsp");
+        dispatcher.forward(request, response);
 	}
 
 	/**

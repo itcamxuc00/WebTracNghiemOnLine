@@ -11,10 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.corba.se.impl.encoding.CodeSetConversion.BTCConverter;
-
 import beans.LayDeThiRs;
-import beans.ThongTinTK;
 import connection.DBConnection;
 import utils.DBUtils;
 import utils.MathFunction;
