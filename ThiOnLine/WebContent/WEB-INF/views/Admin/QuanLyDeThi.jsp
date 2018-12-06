@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Điểm của bạn là:</h1>
-	<h1>${Diem}</h1>
-	<h1>Thời gian làm bài: <span>${phut} Phút </span>${giay} giây</h1>
+	<h1>Good night Duy</h1>
 </body>
 </html>

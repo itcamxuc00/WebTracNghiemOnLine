@@ -55,7 +55,7 @@ public class TrangCaNhan extends HttpServlet {
         	Connection conn = DBConnection.getMyConnection();
         	thongTinTK = DBUtils.LayThongTin(conn, loginedUser.getTenTK());
         	dsDeThi = DBUtils.LayDSDeThi(conn, loginedUser.getTenTK());
-        	request.setAttribute("dsDethi", dsDeThi);
+        	request.setAttribute("dsDeThi", dsDeThi);
         	request.setAttribute("user", thongTinTK);
         }
         catch(Exception e) {
@@ -64,11 +64,9 @@ public class TrangCaNhan extends HttpServlet {
         request.setAttribute("error", err);
         RequestDispatcher dispatcher  = this.getServletContext().getRequestDispatcher("/WEB-INF/views/User/TrangCaNhan.jsp");
         dispatcher.forward(request, response);
+        System.out.println(err);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

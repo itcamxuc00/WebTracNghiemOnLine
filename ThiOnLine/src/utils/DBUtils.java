@@ -3,13 +3,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.sql.Date;
 
 import beans.BG_DeThi;
+import beans.DeThi;
 import beans.LayDeThiRs;
 import beans.LopHoc;
+import beans.LuotThi;
 import beans.TaiKhoan;
 import beans.ThongTinTK;
 
@@ -160,13 +164,17 @@ public class DBUtils {
 	     while(rs.next())
 	     {
 	    	 String maDeThi = rs.getString("MaDeThi");
+	    	 String tieuDe = rs.getString("TieuDe");
 	    	 String maLop = rs.getString("maLop");
+	    	 String tenLop = rs.getString("TenLop");
 	    	 int thoiLuong = rs.getInt("ThoiLuong");
-	    	 Date tGBatDau= rs.getDate("TGBatDau");
-	    	 Date tGKetThuc = rs.getDate("TGketThuc");
+	    	 Timestamp tGBatDau= rs.getTimestamp("TGBatDau");
+	    	 Timestamp tGKetThuc = rs.getTimestamp("TGketThuc");
 	    	 BG_DeThi bg= new BG_DeThi();
 	    	 bg.setMaDeThi(maDeThi);
+	    	 bg.setTieuDe(tieuDe);
 	    	 bg.setMaLop(maLop);
+	    	 bg.setTenLop(tenLop);
 	    	 bg.setThoiLuong(thoiLuong);
 	    	 bg.setTGBatDau(tGBatDau);
 	    	 bg.setTGKetThuc(tGKetThuc);
@@ -174,6 +182,8 @@ public class DBUtils {
 	     }
 		 return list;
 	 }
+	 
+	 
 	 public static List<LayDeThiRs> LayDeThi(Connection conn, String MaDe) throws SQLException {
 		 	String sql = "execute pr_LayDeThi '" + MaDe +"'";
 	       PreparedStatement pstm = conn.prepareStatement(sql); 
@@ -181,7 +191,7 @@ public class DBUtils {
 	       ResultSet rs = pstm.executeQuery();
 	       List<LayDeThiRs> list = new ArrayList<LayDeThiRs>();
 	       while (rs.next()) {
-	            String maCauHoi = rs.getString("MaCauHoi");
+	            int maCauHoi = rs.getInt("MaCauHoi");
 	            String noiDung = rs.getString("NoiDung");
 	            String dapAnA = rs.getString("DapAnA");
 	            String dapAnB = rs.getString("DapAnB");
@@ -201,6 +211,29 @@ public class DBUtils {
 	        return list;
 	    }
 	 
+	 
+	 public static LuotThi KiemTraDuocPhepThi(Connection conn, String tenTK, String maDe, String maLop) throws SQLException {
+		 String sql = "pr_KiemTraDuocPhepThi '" + tenTK +"','"
+				 + maDe + "','" + maLop + "'";		 
+	       PreparedStatement pstm = conn.prepareStatement(sql); 
+	       ResultSet rs = pstm.executeQuery();
+	       if(rs.next())
+	       {
+	    	   LuotThi lt = new LuotThi();
+	    	   lt.setMaDe(maDe);
+	    	   lt.setMaLop(maLop);
+	    	   String tieuDe = rs.getString("TieuDe");
+	    	   int thoiLuong = rs.getInt("ThoiLuong");
+	    	   Timestamp batDau = rs.getTimestamp("BatDau");
+	    	   lt.setTieuDe(tieuDe);
+	    	   lt.setThoiLuong(thoiLuong);
+	    	   lt.setBatDau(batDau);
+	    	   return lt;
+	       }
+		 return null;
+	 }
+	 
+	 
 	 public static String LayDapAn(Connection conn, String MaDe) throws SQLException {
 		 String sql = "execute pr_LayDapAn '" + MaDe +"'";
 		 PreparedStatement pstm = conn.prepareStatement(sql); 
@@ -211,5 +244,96 @@ public class DBUtils {
 			 dapAn = rs.getString("DapAn");
 		 }
 		 return dapAn;
-	 }	 
-}
+	 }
+	 
+	 
+	 private static List<LayDeThiRs> TaoDeThi(Connection conn,int capDo, int soLuong, String maMonHoc) throws SQLException {
+		 if(soLuong>0)
+		 {
+			 List<LayDeThiRs> rsList = new ArrayList<>();
+			 Random rd = new Random();
+			 String sql = "select count(*) as SoLuong from CauHoi where CapDo = ? and MonHoc = ?";
+			 PreparedStatement pstm = conn.prepareStatement(sql); 
+			 pstm.setInt(1,capDo);
+			 pstm.setString(2,maMonHoc);
+			 ResultSet rs = pstm.executeQuery();
+			 if(rs.next())
+			 {
+				 int soLuongSanCo = rs.getInt("SoLuong");
+				 if(soLuongSanCo<soLuong)
+				 {
+					if(capDo==1) new ArithmeticException("Số câu hỏi dễ bạn chọn lớn hơn số lương trong ngân hàng");
+					else if (capDo==2) new ArithmeticException("Số câu hỏi trung bình bạn chọn lớn hơn số lương trong ngân hàng");
+					else if(capDo==3) new ArithmeticException("Số câu hỏi khó bạn chọn lớn hơn số lương trong ngân hàng");
+				}
+				 else{
+					 sql = "select MaCauHoi,NoiDung,DapAnA,DapAnB,DapAnC,DapAnD,DapAnDung from CauHoi where CapDo = ? and CauHoi.MonHoc = ?";
+					 pstm = conn.prepareStatement(sql); 
+					 pstm.setInt(1,capDo);
+					 pstm.setString(2,maMonHoc);
+					 List<LayDeThiRs> tmpList = new ArrayList<>();
+					 while(rs.next())
+					 {
+						 int maCauHoi = rs.getInt("MâCuHoi");
+						 String noiDung = rs.getString("NoiDung");
+						 String dapAnA = rs.getString("DapAnA");
+						 String dapAnB = rs.getString("DapAnB");
+						 String dapAnC = rs.getString("DapAnC");
+						 String dapAnD = rs.getString("DapAnD");
+						 String dapAnDug = rs.getString("DapAnDung");
+						 LayDeThiRs ch = new LayDeThiRs();
+						 ch.setMaCauHoi(maCauHoi);
+						 ch.setNoiDung(noiDung);
+						 ch.setDapAnA(dapAnA);
+						 ch.setDapAnB(dapAnB);
+						 ch.setDapAnC(dapAnC);
+						 ch.setDapAnD(dapAnD);
+						 ch.setDapAnD(dapAnDug);
+						 tmpList.add(ch);
+					 }
+					 int i;
+					 while(rsList.size()<soLuong)
+					 {
+						 i = rd.nextInt(tmpList.size()); 
+						 rsList.add(tmpList.get(i));
+						 tmpList.remove(i);
+					 }
+				 }
+			 }
+			 return rsList;
+		 }
+		 return null;
+	 }
+	 
+	 public static List<LayDeThiRs> TaoDeThi(Connection conn, String maMonHoc, int soCauDe, int soCauTb, int soCauKho) throws SQLException {
+		 List<LayDeThiRs> rsList = new ArrayList<>();
+		 rsList.addAll(TaoDeThi(conn, 1, soCauDe, maMonHoc));
+		 rsList.addAll(TaoDeThi(conn, 2, soCauTb, maMonHoc));
+		 rsList.addAll(TaoDeThi(conn, 3, soCauKho, maMonHoc));
+		 return rsList;
+	 }
+	 
+	 public static List<DeThi> LayDSDeThi(Connection conn) throws SQLException {
+		 String sql = "select * from DeThi";
+		 List<DeThi> list = new ArrayList<>();
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 ResultSet rs = pstm.executeQuery();
+		 while(rs.next())
+		 {
+			 String maDeThi = rs.getString("MaDeThi");
+			 String maMonHoc = rs.getString("maMonHoc");
+			 int soCauDe = rs.getInt("SoCauDe");
+			 int soCauKho = rs.getInt("SoCauKho");
+			 int soCauTrungBinh = rs.getInt("SoCauTrungBinh");
+			 DeThi dt = new DeThi();
+			 dt.setMaDeThi(maDeThi);
+			 dt.setMaMonHoc(maMonHoc);
+			 dt.setSoCauDe(soCauDe);
+			 dt.setSoCauKho(soCauKho);
+			 dt.setSoCauTrungBinh(soCauTrungBinh);
+			 list.add(dt);
+		 }
+		 return null;
+	 }
+}	 
+	 

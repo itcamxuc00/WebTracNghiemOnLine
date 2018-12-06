@@ -83,7 +83,7 @@
                                 <h2 class="text-primary"><strong>Còn lại</strong></h2>
                                 <h3 class="text-danger">
                                     <strong>
-                                        <span id="minute">15</span>
+                                        <span id="minute">${luotThi.thoiLuong }</span>
                                         <span>: </span>
                                         <span id="second">00</span>
                                     </strong>
@@ -111,7 +111,7 @@
                                 <h2 class="text-primary"><strong>Câu hỏi</strong></h2>
                             </div>
                             <div class="test-name">
-                                <h3 class="text-primary">English test for beginer</h3>
+                                <h3 class="text-primary">${luotThi.tieuDe }</h3>
                             </div>
                         </div>
                     </div>

@@ -2,19 +2,15 @@ package beans;
 
 public class LayDeThiRs {
 	
-	private String MaCauHoi;
+	private int MaCauHoi;
 	private String NoiDung;
 	private String DapAnA;
 	private String DapAnB;
 	private String DapAnC;
 	private String DapAnD;
 	private String DapAnDung;
-	public String getMaCauHoi() {
-		return MaCauHoi;
-	}
-	public void setMaCauHoi(String maCauHoi) {
-		MaCauHoi = maCauHoi;
-	}
+
+	
 	public String getNoiDung() {
 		return NoiDung;
 	}
@@ -50,6 +46,12 @@ public class LayDeThiRs {
 	}
 	public void setDapAnDung(String dapAnDung) {
 		DapAnDung = dapAnDung;
+	}
+	public int getMaCauHoi() {
+		return MaCauHoi;
+	}
+	public void setMaCauHoi(int maCauHoi) {
+		MaCauHoi = maCauHoi;
 	}
 
 }

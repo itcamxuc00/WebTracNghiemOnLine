@@ -5,6 +5,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import beans.LuotThi;
 import beans.TaiKhoan;
 
 @SuppressWarnings("unused")
@@ -37,7 +39,17 @@ public class MyUtils {
 	        TaiKhoan loginedUser = (TaiKhoan) session.getAttribute("loginedUser");
 	        return loginedUser;
 	    }
-	 
+	 //Luu thonng tin luot thi vao Session
+	    public static void setLuotThi(HttpSession session, LuotThi luotThi)
+	    {
+	    	session.setAttribute("luotThi", luotThi);
+	    }
+	    public static LuotThi getLuotThi(HttpSession session)
+	    {
+	    	LuotThi luotThi = (LuotThi) session.getAttribute("luotThi");
+	    	return luotThi;
+	    }
+	    
 	    // Lưu thông tin người dùng vào Cookie.
 	    public static void storeUserCookie(HttpServletResponse response, TaiKhoan user) {
 	        System.out.println("Store user cookie");

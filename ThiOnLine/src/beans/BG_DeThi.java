@@ -1,14 +1,16 @@
 package beans;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 
 public class BG_DeThi {
 	private  String MaDeThi;
+	private String TieuDe;
 	private  String MaLop;
+	private String TenLop;
 	private  int ThoiLuong;
-	private Date TGKetThuc;
-	private Date TGBatDau;
+	private Timestamp TGKetThuc;
+	private Timestamp TGBatDau;
 	
 	public String getMaDeThi() {
 		return MaDeThi;
@@ -28,16 +30,28 @@ public class BG_DeThi {
 	public void setThoiLuong(int thoiLuong) {
 		ThoiLuong = thoiLuong;
 	}
-	public Date getTGKetThuc() {
+	public String getTenLop() {
+		return TenLop;
+	}
+	public void setTenLop(String tenLop) {
+		TenLop = tenLop;
+	}
+	public String getTieuDe() {
+		return TieuDe;
+	}
+	public void setTieuDe(String tieuDe) {
+		TieuDe = tieuDe;
+	}
+	public Timestamp getTGKetThuc() {
 		return TGKetThuc;
 	}
-	public void setTGKetThuc(Date tGKetThuc) {
+	public void setTGKetThuc(Timestamp tGKetThuc) {
 		TGKetThuc = tGKetThuc;
 	}
-	public Date getTGBatDau() {
+	public Timestamp getTGBatDau() {
 		return TGBatDau;
 	}
-	public void setTGBatDau(Date tGBatDau) {
+	public void setTGBatDau(Timestamp tGBatDau) {
 		TGBatDau = tGBatDau;
 	}
 }

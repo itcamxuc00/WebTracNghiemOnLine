@@ -14,7 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/calendar.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/user.css" />
 </head>
 <body>
@@ -136,30 +136,31 @@
                                         <button id="btnNext" type="button">Next <i class="fas fa-forward"></i></button>
                                         <div id="divCal"></div>
                                     </div>
-                                    <script src="js/calendar.js"></script>
+                                    <script src="JS/calendar.js"></script>
                                 </div>
                             </div>
                             <div class="col-lg-8">
                                 <div class="bg-white">
                                     <h3 class="panel-heading text-primary pl-3 m-0 pt-3 text-left">Sựu kiện sắp tới</h3>
                                     
-                                    <c:forEach items="dsDeThi" var="deThi"></c:forEach>
-                                    
-                                    <div class="event-recent mt-4">
+                                    <c:forEach items="${dsDeThi }" var="deThi">
+										 <div class="event-recent mt-4">
                                         <div class="event-block pl-3 pt-2">
-                                            <a class="size-18 event-name text-primary"></a>
+                                            <a class="size-18 event-name text-primary">${deThi.tieuDe }</a>
                                             <p class="event-info pl-3">
                                                 <span>Lớp:</span>
-                                                <a href=""><span class="text-primary mr-3">Luyện thi THPTQG 2019 môn
-                                                        Toán</span></a>
+                                                <a href=""><span class="text-primary mr-3">${deThi.tenLop }</span></a>
                                                 <span>Bắt đầu:</span>
-                                                <span class="text-info ml-0 mr-3">${deThi.tgBatDau}</span>
+                                                <span class="text-info ml-0 mr-3">${deThi.TGBatDau}</span>
                                                 <span>Kết thúc:</span>
-                                                <span class="text-danger ml-0">${deThi.tgKetThuc}</span>
+                                                <span class="text-danger ml-0">${deThi.TGKetThuc}</span>
+                                                <span>Kết thúc:</span>
+                                                <span class="text-danger ml-0">${deThi.thoiLuong} phút</span>
                                             </p>
-                                            <a href="example\maLop=${deThi.maLop }&maDe=${deThi.maDe}" class="text-primary pl-3"><i class="fas fa-play-circle"></i> Đến ngay...</a>
+                                            <a href="Example?maLop=${deThi.maLop }&maDe=${deThi.maDeThi}" class="text-primary pl-3"><i class="fas fa-play-circle"></i> Đến ngay...</a>
                                         </div>
                                     </div>
+                                    </c:forEach>                     
                                 </div>
                             </div>
                         </div>
