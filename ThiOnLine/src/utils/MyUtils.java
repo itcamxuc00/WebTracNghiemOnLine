@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.DeThi;
 import beans.LuotThi;
 import beans.TaiKhoan;
 
@@ -33,7 +34,7 @@ public class MyUtils {
 	        // Trên JSP có thể truy cập thông qua ${loginedUser}
 	        session.setAttribute("loginedUser", loginedUser);
 	    }
-	 
+	    
 	    // Lấy thông tin người dùng lưu trữ trong Session.
 	    public static TaiKhoan getLoginedUser(HttpSession session) {
 	        TaiKhoan loginedUser = (TaiKhoan) session.getAttribute("loginedUser");
@@ -48,6 +49,16 @@ public class MyUtils {
 	    {
 	    	LuotThi luotThi = (LuotThi) session.getAttribute("luotThi");
 	    	return luotThi;
+	    }
+	    
+	    public static void setDeThi(HttpSession session, DeThi deThi)
+	    {
+	    	session.setAttribute("deThi", deThi);
+	    }
+	    public static DeThi getDeThi(HttpSession session)
+	    {
+	    	DeThi deThi = (DeThi)session.getAttribute("deThi");
+	    	return deThi;
 	    }
 	    
 	    // Lưu thông tin người dùng vào Cookie.

@@ -11,6 +11,7 @@ public class BG_DeThi {
 	private  int ThoiLuong;
 	private Timestamp TGKetThuc;
 	private Timestamp TGBatDau;
+	private int SoLanLamBai;
 	
 	public String getMaDeThi() {
 		return MaDeThi;
@@ -53,5 +54,11 @@ public class BG_DeThi {
 	}
 	public void setTGBatDau(Timestamp tGBatDau) {
 		TGBatDau = tGBatDau;
+	}
+	public int getSoLanLamBai() {
+		return SoLanLamBai;
+	}
+	public void setSoLanLamBai(int soLanLamBai) {
+		SoLanLamBai = soLanLamBai;
 	}
 }

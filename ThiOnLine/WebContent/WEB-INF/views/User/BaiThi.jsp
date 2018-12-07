@@ -63,9 +63,6 @@
                                         <span class="dropdown-toggle"></span>
                                     </div>
                                     <ul class="dropdown-menu">
-                                        <li class="dropdown-item">Toán đại cương A1 - Giải tich</li>
-                                        <li class="dropdown-item">Lí đại cương A1</li>
-                                        <li class="dropdown-item">Hóa đại cương A2</li>
                                     </ul>
                                 </div>
                             </div>
@@ -97,7 +94,21 @@
                                 var set = setInterval(function CountDown() {
                                     s--;
                                     if (s <= 0) {
-                                        if (m == 0) { alert("het gio"); setTimeout(set) }
+                                        if (m == 0) { 
+                                            var baiThi = "";
+                                            var luachon ;
+                                           var al = document.getElementsByClassName("answorten");
+                                            for(i=0;i<al.length;i++){
+                                               luachon = "*";
+                                               var ch = al[i].querySelectorAll('input[type="radio"]')
+                                                for(j=0;j<ch.length;j++)
+                                                {
+                                                    if(ch[j].checked == true) luachon = ch[j].getAttribute("data-choice");
+                                                }
+                                                baiThi += luachon;
+                                            }
+                            				post('Example',{baiThi:baiThi});
+                                        }
                                         else {
                                             s = 59;
                                             m = m - 1;
@@ -116,7 +127,7 @@
                         </div>
                     </div>
                     <div class="test-content">
-                    <c:forEach items="${DSCauHoi}" var="cauhoi">
+                    <c:forEach items="${dsCauHoi}" var="cauhoi">
                     	<ul class="question">
                             <li>
                                 <div class="frage">

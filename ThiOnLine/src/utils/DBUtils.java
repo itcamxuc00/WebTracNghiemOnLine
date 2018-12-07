@@ -14,6 +14,7 @@ import beans.DeThi;
 import beans.LayDeThiRs;
 import beans.LopHoc;
 import beans.LuotThi;
+import beans.MonHoc;
 import beans.TaiKhoan;
 import beans.ThongTinTK;
 
@@ -100,6 +101,42 @@ public class DBUtils {
 	        return list;
 	    }
 	 
+	 	public static List<LopHoc> LayDSLopHoc(Connection conn) throws SQLException {
+		 	String sql = "select * from LopHoc";
+	        PreparedStatement pstm = conn.prepareStatement(sql); 
+	       // pstm.setString(1,TenTK);
+	        ResultSet rs = pstm.executeQuery();
+	        List<LopHoc> list = new ArrayList<LopHoc>();
+	        while (rs.next()) {
+	            String malop = rs.getString("MaLop");
+	            String tenlop = rs.getString("TenLop");
+	            LopHoc lh = new LopHoc();
+	            lh.setMaLop(malop);
+	            lh.setTenLop(tenlop);    
+	            list.add(lh);
+	        }	        
+	        return list;
+	    }
+	 
+	 
+	 
+	 public static List<LopHoc> LopHocChuaThi(Connection conn, String maDe) throws SQLException {
+		 	String sql = "pr_LopHocChuaThi'" + maDe + "'";
+	        PreparedStatement pstm = conn.prepareStatement(sql); 
+	        ResultSet rs = pstm.executeQuery();
+	        List<LopHoc> list = new ArrayList<LopHoc>();
+	        while (rs.next()) {
+	            String malop = rs.getString("MaLop");
+	            String tenlop = rs.getString("TenLop");
+	            LopHoc lh = new LopHoc();
+	            lh.setMaLop(malop);
+	            lh.setTenLop(tenlop);    
+	            list.add(lh);
+	        }	        
+	        return list;
+	    }
+	 
+	 
 	 public static void XoaKhoiLop(Connection conn, String TenTK, String MaLop) throws SQLException {
 		 	String sql = "DELETE FROM TV_LopHoc WHERE TV_LopHoc.MaLopHoc = ? and TV_LopHoc.TenTK = ?";
 	        PreparedStatement pstm = conn.prepareStatement(sql); 
@@ -107,55 +144,7 @@ public class DBUtils {
 	       pstm.setString(2,TenTK);
 	       pstm.executeUpdate();
 	    }
-    /*
-    public static Product findProduct(Connection conn, String code) throws SQLException {
-        String sql = "Select a.Code, a.Name, a.Price from Product a where a.Code=?";
- 
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        pstm.setString(1, code);
- 
-        ResultSet rs = pstm.executeQuery();
- 
-        while (rs.next()) {
-            String name = rs.getString("Name");
-            float price = rs.getFloat("Price");
-            Product product = new Product(code, name, price);
-            return product;
-        }
-        return null;
-    }
- 
-    public static void updateProduct(Connection conn, Product product) throws SQLException {
-        String sql = "Update Product set Name =?, Price=? where Code=? ";
- 
-        PreparedStatement pstm = conn.prepareStatement(sql);
- 
-        pstm.setString(1, product.getName());
-        pstm.setFloat(2, product.getPrice());
-        pstm.setString(3, product.getCode());
-        pstm.executeUpdate();
-    }
- 
-    public static void insertProduct(Connection conn, Product product) throws SQLException {
-        String sql = "Insert into Product(Code, Name,Price) values (?,?,?)";
- 
-        PreparedStatement pstm = conn.prepareStatement(sql);
- 
-        pstm.setString(1, product.getCode());
-        pstm.setString(2, product.getName());
-        pstm.setFloat(3, product.getPrice());
- 
-        pstm.executeUpdate();
-    }
- 
-    public static void deleteProduct(Connection conn, String code) throws SQLException {
-        String sql = "Delete From Product where Code= ?";
- 
-        PreparedStatement pstm = conn.prepareStatement(sql);
- 
-        pstm.setString(1, code);
-        pstm.executeUpdate();
-    }*/
+	 
 	 public static List<BG_DeThi> LayDSDeThi(Connection conn, String tenTK) throws SQLException{
 		 List<BG_DeThi> list = new ArrayList<>();
 		 String sql = "execute pr_LayDsDeThi'" + tenTK + "'";
@@ -183,6 +172,16 @@ public class DBUtils {
 		 return list;
 	 }
 	 
+	 public static void LuuDeThi(Connection conn, DeThi deThi) throws SQLException{
+		 String sql = "insert into DeThi values (?,?,?,?,?)";
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 pstm.setString(1, deThi.getMaDeThi());
+		 pstm.setString(2,deThi.getMaMonHoc());
+		 pstm.setInt(3, deThi.getSoCauDe());;
+		 pstm.setInt(4, deThi.getSoCauTrungBinh());
+		 pstm.setInt(5, deThi.getSoCauKho());
+		 pstm.executeUpdate();
+	 }
 	 
 	 public static List<LayDeThiRs> LayDeThi(Connection conn, String MaDe) throws SQLException {
 		 	String sql = "execute pr_LayDeThi '" + MaDe +"'";
@@ -262,19 +261,20 @@ public class DBUtils {
 				 int soLuongSanCo = rs.getInt("SoLuong");
 				 if(soLuongSanCo<soLuong)
 				 {
-					if(capDo==1) new ArithmeticException("Số câu hỏi dễ bạn chọn lớn hơn số lương trong ngân hàng");
-					else if (capDo==2) new ArithmeticException("Số câu hỏi trung bình bạn chọn lớn hơn số lương trong ngân hàng");
-					else if(capDo==3) new ArithmeticException("Số câu hỏi khó bạn chọn lớn hơn số lương trong ngân hàng");
+					if(capDo==1) throw new ArithmeticException("Số câu hỏi dễ bạn chọn lớn hơn số lương trong ngân hàng");
+					else if (capDo==2) throw new ArithmeticException("Số câu hỏi trung bình bạn chọn lớn hơn số lương trong ngân hàng");
+					else if(capDo==3) throw new ArithmeticException("Số câu hỏi khó bạn chọn lớn hơn số lương trong ngân hàng");
 				}
 				 else{
 					 sql = "select MaCauHoi,NoiDung,DapAnA,DapAnB,DapAnC,DapAnD,DapAnDung from CauHoi where CapDo = ? and CauHoi.MonHoc = ?";
 					 pstm = conn.prepareStatement(sql); 
 					 pstm.setInt(1,capDo);
 					 pstm.setString(2,maMonHoc);
+					 rs = pstm.executeQuery();
 					 List<LayDeThiRs> tmpList = new ArrayList<>();
 					 while(rs.next())
 					 {
-						 int maCauHoi = rs.getInt("MâCuHoi");
+						 int maCauHoi = rs.getInt("MaCauHoi");
 						 String noiDung = rs.getString("NoiDung");
 						 String dapAnA = rs.getString("DapAnA");
 						 String dapAnB = rs.getString("DapAnB");
@@ -288,7 +288,7 @@ public class DBUtils {
 						 ch.setDapAnB(dapAnB);
 						 ch.setDapAnC(dapAnC);
 						 ch.setDapAnD(dapAnD);
-						 ch.setDapAnD(dapAnDug);
+						 ch.setDapAnDung(dapAnDug);
 						 tmpList.add(ch);
 					 }
 					 int i;
@@ -298,6 +298,7 @@ public class DBUtils {
 						 rsList.add(tmpList.get(i));
 						 tmpList.remove(i);
 					 }
+				
 				 }
 			 }
 			 return rsList;
@@ -333,7 +334,68 @@ public class DBUtils {
 			 dt.setSoCauTrungBinh(soCauTrungBinh);
 			 list.add(dt);
 		 }
-		 return null;
+		 return list;
 	 }
+	 
+	 public static void GiaoDeThi(Connection conn,BG_DeThi bg) throws SQLException {
+		 String sql = "INSERT INTO BG_DeThi VALUES (?,?,?,?,?,?,?)";
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 pstm.setString(1, bg.getMaDeThi());
+		 pstm.setString(2, bg.getMaLop());
+		 pstm.setTimestamp(3, bg.getTGBatDau());
+		 pstm.setTimestamp(4, bg.getTGKetThuc());
+		 pstm.setInt(5, bg.getThoiLuong());
+		 pstm.setString(6, bg.getTieuDe());
+		 pstm.setInt(7, bg.getSoLanLamBai());
+		 pstm.executeUpdate();
+	 }
+	 
+	 public static List<MonHoc>LayMonHoc(Connection conn) throws SQLException {
+		 String sql = "select * from MonHoc";
+		 List<MonHoc> list = new ArrayList<>();
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 ResultSet rs = pstm.executeQuery();
+		 while(rs.next())
+		 {
+			 String maMonHoc = rs.getString("MaMon");
+			 String tenMonHoc = rs.getString("TenMon");
+			 MonHoc mh  = new MonHoc();
+			 mh.setMaMonHoc(maMonHoc);
+			 mh.setTenMonHoc(tenMonHoc);
+			 list.add(mh);
+		 }
+		 return list;
+	 }
+	 
+	 public static void LuuNDDeThi(Connection conn, String maDe, String MaCauHoi) throws SQLException {
+		 int maCauHoi = Integer.parseInt(MaCauHoi);
+		 String sql = "INSERT INTO ND_DeThi VALUES (?,?)";
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 pstm.setString(1, maDe);
+		 pstm.setInt(2, maCauHoi);
+		 pstm.executeUpdate();
+	 }
+	 
+	 public static void XoaLopHoc (Connection conn,String maLop) throws SQLException {
+		 String sql = "DeLete from LopHoc where MaLop = (?)";
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 pstm.setString(1, maLop);
+		 pstm.executeUpdate();
+	 }
+	 
+	 public static void XoaDeThi(Connection conn,String maDe) throws SQLException {
+		 String sql = "DeLete from DeThi where MaDeThi = (?)";
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 pstm.setString(1, maDe);
+		 pstm.executeUpdate();
+	 }
+	 
+	 public static void XoaTaiKhoan(Connection conn,String tenTK) throws SQLException {
+		 String sql = "DeLete from TaiKhoan where tenTK = (?)";
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 pstm.setString(1, tenTK);
+		 pstm.executeUpdate();
+	 }
+	 
 }	 
 	 
