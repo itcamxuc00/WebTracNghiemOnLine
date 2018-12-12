@@ -63,7 +63,7 @@ public class Home extends HttpServlet {
 				{
 					System.out.print(tk.getQuyen());
 		            HttpSession session = request.getSession();
-		            MyUtils.storeLoginedUser(session, tk);
+		            MyUtils.setTaiKhoanDangNhap(session, tk);
 					if(tk.getQuyen()==1)
 					{
 			            response.sendRedirect(request.getContextPath() + "/TrangCaNhan");

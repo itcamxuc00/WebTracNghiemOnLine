@@ -57,5 +57,4 @@ public class ThongTinTK {
 	public void setSDT(String sDT) {
 		SDT = sDT;
 	}
-	
 }

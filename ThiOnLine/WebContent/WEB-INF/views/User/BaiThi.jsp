@@ -86,38 +86,6 @@
                                     </strong>
                                 </h3>
                             </div>
-                            <script>
-                                var txtm = document.getElementById("minute");
-                                var txts = document.getElementById("second");
-                                var m = txtm.innerHTML;
-                                var s = txts.innerHTML;
-                                var set = setInterval(function CountDown() {
-                                    s--;
-                                    if (s <= 0) {
-                                        if (m == 0) { 
-                                            var baiThi = "";
-                                            var luachon ;
-                                           var al = document.getElementsByClassName("answorten");
-                                            for(i=0;i<al.length;i++){
-                                               luachon = "*";
-                                               var ch = al[i].querySelectorAll('input[type="radio"]')
-                                                for(j=0;j<ch.length;j++)
-                                                {
-                                                    if(ch[j].checked == true) luachon = ch[j].getAttribute("data-choice");
-                                                }
-                                                baiThi += luachon;
-                                            }
-                            				post('Example',{baiThi:baiThi});
-                                        }
-                                        else {
-                                            s = 59;
-                                            m = m - 1;
-                                        }
-                                    }
-                                    txtm.innerHTML = m;
-                                    txts.innerHTML = s;
-                                }, 1000)
-                            </script>
                             <div id="questions-complete" class="questions-complete pt-5 pb-5">
                                 <h2 class="text-primary"><strong>Câu hỏi</strong></h2>
                             </div>
@@ -127,7 +95,7 @@
                         </div>
                     </div>
                     <div class="test-content">
-                    <c:forEach items="${dsCauHoi}" var="cauhoi">
+                    <c:forEach items="${DSCauHoi}" var="cauhoi">
                     	<ul class="question">
                             <li>
                                 <div class="frage">

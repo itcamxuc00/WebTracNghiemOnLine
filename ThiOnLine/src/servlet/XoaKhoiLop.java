@@ -53,8 +53,24 @@ public class XoaKhoiLop extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String status = "";
+		try
+		{
+			Connection conn = DBConnection.getMyConnection();
+			String tool = request.getParameter("tool");
+			String tenTK = request.getParameter("tenTK");
+			String maLop = request.getParameter("maLop");
+			if(tool.equals("them"))
+				DBUtils.ThemVaoLop(conn, maLop, tenTK);
+			else DBUtils.XoaKhoiLop(conn, tenTK, maLop);
+			status = "ok";
+			response.getWriter().write(status);
+		}
+		catch(Exception e)
+		{		
+			status = e.getLocalizedMessage();
+			response.getWriter().write(status);
+		}
 	}
 
 }

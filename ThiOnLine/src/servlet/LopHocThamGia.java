@@ -60,8 +60,7 @@ public class LopHocThamGia extends HttpServlet {
 		catch(Exception e)
 		{
 			err = e.getMessage();
-			responsejson= err;
-			response.getWriter().write(responsejson);
+			System.out.println(err);
 		}
 	}
 	/**

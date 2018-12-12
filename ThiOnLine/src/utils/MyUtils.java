@@ -16,49 +16,56 @@ public class MyUtils {
 	 
 	    private static final String ATT_NAME_USER_NAME = "ATTRIBUTE_FOR_STORE_USER_NAME_IN_COOKIE";
 	 
-	    // Lưu trữ Connection vào attribute của request.
-	    // Thông tin lưu trữ này chỉ tồn tại trong thời gian yêu cầu (request)
-	    // cho tới khi dữ liệu được trả về trình duyệt người dùng.
-	    public static void storeConnection(ServletRequest request, Connection conn) {
-	        request.setAttribute(ATT_NAME_CONNECTION, conn);
-	    }
-	 
-	    // Lấy đối tượng Connection đã được lưu trữ trong attribute của request.
-	    public static Connection getStoredConnection(ServletRequest request) {
-	        Connection conn = (Connection) request.getAttribute(ATT_NAME_CONNECTION);
-	        return conn;
-	    }
 	 
 	    // Lưu trữ thông tin người dùng đã login vào Session.
-	    public static void storeLoginedUser(HttpSession session, TaiKhoan loginedUser) {
+	    public static void setTaiKhoanDangNhap(HttpSession session, TaiKhoan loginedUser) {
 	        // Trên JSP có thể truy cập thông qua ${loginedUser}
 	        session.setAttribute("loginedUser", loginedUser);
 	    }
 	    
 	    // Lấy thông tin người dùng lưu trữ trong Session.
-	    public static TaiKhoan getLoginedUser(HttpSession session) {
+	    public static TaiKhoan getTaiKhoanDangNhap(HttpSession session) {
 	        TaiKhoan loginedUser = (TaiKhoan) session.getAttribute("loginedUser");
 	        return loginedUser;
+	    }
+	    
+	    //Xoa thong tin nguoi dung khoi session
+	    public static void delTaiKhoanDangNhap(HttpSession session) {
+	    	session.removeAttribute("loginedUser");
 	    }
 	 //Luu thonng tin luot thi vao Session
 	    public static void setLuotThi(HttpSession session, LuotThi luotThi)
 	    {
 	    	session.setAttribute("luotThi", luotThi);
 	    }
+	    
+	    //Lay luot thi ktu session, để chấm điểm
 	    public static LuotThi getLuotThi(HttpSession session)
 	    {
 	    	LuotThi luotThi = (LuotThi) session.getAttribute("luotThi");
 	    	return luotThi;
 	    }
-	    
-	    public static void setDeThi(HttpSession session, DeThi deThi)
+	    //Xoa luot thi khoi session
+	    public static void delLuotThi(HttpSession session) {
+	    	session.removeAttribute("uotThi");
+	    }
+	    //Luu mot de thi vao session, dùng trong việc sửa và thêm đề thi
+	    // 
+	    public static void setDeThi(HttpSession session, String deThi)
 	    {
 	    	session.setAttribute("deThi", deThi);
 	    }
-	    public static DeThi getDeThi(HttpSession session)
+	    // Lay đề thi từ session
+	    public static String getDeThi(HttpSession session)
 	    {
-	    	DeThi deThi = (DeThi)session.getAttribute("deThi");
+	    	String deThi = (String)session.getAttribute("deThi");
 	    	return deThi;
+	    }
+	    
+	    //Xoa de thi khoi session
+	    public static void delDeThi(HttpSession session)
+	    {
+	    	session.removeAttribute("deThi");
 	    }
 	    
 	    // Lưu thông tin người dùng vào Cookie.

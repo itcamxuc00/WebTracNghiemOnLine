@@ -11,6 +11,7 @@ import java.sql.Date;
 
 import beans.BG_DeThi;
 import beans.DeThi;
+import beans.HocSinh;
 import beans.LayDeThiRs;
 import beans.LopHoc;
 import beans.LuotThi;
@@ -64,6 +65,42 @@ public class DBUtils {
 	        return list;
 	    }
 	 
+	 public static List<HocSinh> LayDSHocSinhChuaVaoLop(Connection conn, String maLop) throws SQLException{
+		 String sql = "pr_HocSinhChuaVaoLop'" + maLop + "'";
+	        PreparedStatement pstm = conn.prepareStatement(sql); 
+	        ResultSet rs = pstm.executeQuery();
+	        List<HocSinh> list = new ArrayList<>();
+	        while(rs.next())
+	        {
+	        	String tenTK = rs.getString("TenTK");
+	        	String tenHocSinh = rs.getString("TenNguoiDung");
+	        	HocSinh hs = new HocSinh();
+	        	hs.setTenTK(tenTK);
+	        	hs.setTenHocSinh(tenHocSinh);
+	        	list.add(hs);
+	        }
+	        return list;
+	 }
+	 
+	 
+	 public static List<HocSinh> LayDSHocSinhDaVaoLop(Connection conn, String maLop) throws SQLException{
+		 String sql = "pr_HocSinhDaVaoLop'" + maLop + "'";
+	        PreparedStatement pstm = conn.prepareStatement(sql); 
+	        ResultSet rs = pstm.executeQuery();
+	        List<HocSinh> list = new ArrayList<>();
+	        while(rs.next())
+	        {
+	        	String tenTK = rs.getString("TenTK");
+	        	String tenHocSinh = rs.getString("TenNguoiDung");
+	        	HocSinh hs = new HocSinh();
+	        	hs.setTenTK(tenTK);
+	        	hs.setTenHocSinh(tenHocSinh);
+	        	list.add(hs);
+	        }
+	        return list;
+	 }
+	 
+	 
 	 public static ThongTinTK LayThongTin(Connection conn, String TenTK) throws SQLException{
 	        String sql = "select TenNguoiDung,NgaySinh,DiaChi,SDT from TaiKhoan where TenTK = ?";
 	        PreparedStatement pstm = conn.prepareStatement(sql); 
@@ -102,7 +139,7 @@ public class DBUtils {
 	    }
 	 
 	 	public static List<LopHoc> LayDSLopHoc(Connection conn) throws SQLException {
-		 	String sql = "select * from LopHoc";
+		 	String sql = "exec pr_LayDSlopHoc";
 	        PreparedStatement pstm = conn.prepareStatement(sql); 
 	       // pstm.setString(1,TenTK);
 	        ResultSet rs = pstm.executeQuery();
@@ -110,9 +147,13 @@ public class DBUtils {
 	        while (rs.next()) {
 	            String malop = rs.getString("MaLop");
 	            String tenlop = rs.getString("TenLop");
+	            Date ngayKetThuc = rs.getDate("NgayKetThuc");
+	            int soHocSinh = rs.getInt("SoLuong");
 	            LopHoc lh = new LopHoc();
 	            lh.setMaLop(malop);
 	            lh.setTenLop(tenlop);    
+	            lh.setNgayKetThuc(ngayKetThuc);
+	            lh.setSoHocSinh(soHocSinh);
 	            list.add(lh);
 	        }	        
 	        return list;
@@ -145,6 +186,15 @@ public class DBUtils {
 	       pstm.executeUpdate();
 	    }
 	 
+	 public static void ThemVaoLop(Connection conn, String maLop,String tenTK) throws SQLException {
+		 String sql = "Insert into TV_LopHoc values (?,?)";
+		 PreparedStatement pstm = conn.prepareStatement(sql);
+		 pstm.setString(1, maLop);
+		 pstm.setString(2, tenTK);
+		 pstm.executeUpdate();
+	 }
+	 
+	 
 	 public static List<BG_DeThi> LayDSDeThi(Connection conn, String tenTK) throws SQLException{
 		 List<BG_DeThi> list = new ArrayList<>();
 		 String sql = "execute pr_LayDsDeThi'" + tenTK + "'";
@@ -173,13 +223,10 @@ public class DBUtils {
 	 }
 	 
 	 public static void LuuDeThi(Connection conn, DeThi deThi) throws SQLException{
-		 String sql = "insert into DeThi values (?,?,?,?,?)";
+		 String sql = "insert into DeThi values (?,?,0,0,0)";
 		 PreparedStatement pstm = conn.prepareStatement(sql); 
 		 pstm.setString(1, deThi.getMaDeThi());
 		 pstm.setString(2,deThi.getMaMonHoc());
-		 pstm.setInt(3, deThi.getSoCauDe());;
-		 pstm.setInt(4, deThi.getSoCauTrungBinh());
-		 pstm.setInt(5, deThi.getSoCauKho());
 		 pstm.executeUpdate();
 	 }
 	 
@@ -210,6 +257,32 @@ public class DBUtils {
 	        return list;
 	    }
 	 
+	 public static List<Integer> LayDSCauHoi(Connection conn, String monHoc) throws SQLException {
+		 	String sql = "select MaCauHoi from CauHoi where MonHoc = ?";
+	       PreparedStatement pstm = conn.prepareStatement(sql); 
+	       pstm.setString(1, monHoc);
+	       ResultSet rs = pstm.executeQuery();
+	       List<LayDeThiRs> list = new ArrayList<LayDeThiRs>();
+	       while (rs.next()) {
+	            int maCauHoi = rs.getInt("MaCauHoi");
+	            String noiDung = rs.getString("NoiDung");
+	            String dapAnA = rs.getString("DapAnA");
+	            String dapAnB = rs.getString("DapAnB");
+	            String dapAnC = rs.getString("DapAnC");
+	            String dapAnD = rs.getString("DapAnD");
+	            String dapAnDung = rs.getString("DapAnDung");
+	            LayDeThiRs ch = new LayDeThiRs();
+	            ch.setMaCauHoi(maCauHoi);
+	            ch.setNoiDung(noiDung);
+	            ch.setDapAnA(dapAnA);
+	            ch.setDapAnB(dapAnB);
+	            ch.setDapAnC(dapAnC);
+	            ch.setDapAnD(dapAnD);
+	            ch.setDapAnDung(dapAnDung);
+	            list.add(ch);
+	        }	        
+	        return list;
+	    }
 	 
 	 public static LuotThi KiemTraDuocPhepThi(Connection conn, String tenTK, String maDe, String maLop) throws SQLException {
 		 String sql = "pr_KiemTraDuocPhepThi '" + tenTK +"','"
@@ -366,13 +439,18 @@ public class DBUtils {
 		 }
 		 return list;
 	 }
+	 public static void XoaNDDeThi(Connection conn, String maDe) throws SQLException {
+		 String sql = "exec pr_XoaHetNoiDungDeThi'" + maDe +"'";
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 pstm.executeUpdate();
+	 }
 	 
 	 public static void LuuNDDeThi(Connection conn, String maDe, String MaCauHoi) throws SQLException {
 		 int maCauHoi = Integer.parseInt(MaCauHoi);
 		 String sql = "INSERT INTO ND_DeThi VALUES (?,?)";
 		 PreparedStatement pstm = conn.prepareStatement(sql); 
-		 pstm.setString(1, maDe);
-		 pstm.setInt(2, maCauHoi);
+		 pstm.setInt(1, maCauHoi);
+		 pstm.setString(2, maDe);
 		 pstm.executeUpdate();
 	 }
 	 
@@ -397,5 +475,16 @@ public class DBUtils {
 		 pstm.executeUpdate();
 	 }
 	 
+	 public static void ThemHocSinh(Connection conn,ThongTinTK tk) throws SQLException {
+		 String sql = "INSERT INTO TaiKhoan VALUES (?,?,?,?,?,?,1)";
+		 PreparedStatement pstm = conn.prepareStatement(sql); 
+		 pstm.setString(1, tk.getTenTK());
+		 pstm.setString(2, tk.getMatKhau());
+		 pstm.setString(3, tk.getTenNguoiDung());
+		 pstm.setDate(4, tk.getNgaySinh());
+		 pstm.setString(5, tk.getDiaChi());
+		 pstm.setString(6, tk.getSDT());
+		 pstm.executeUpdate();
+	 }
 }	 
 	 

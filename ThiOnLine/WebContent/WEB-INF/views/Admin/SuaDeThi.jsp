@@ -65,6 +65,7 @@
                     </div>
                 </div>
             </div>
+            <p class="d-none" id="subject-id">${monHoc}</p>
             <div class="col p-4">
                 <div id="test-block" class="test-content">
                 <c:forEach items="${dsCauHoi}" var="cauhoi">
@@ -151,21 +152,17 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Nhập mã đề</h4>
+          <h4 class="modal-title">Bạn có chắc chắn?</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div> 
         <div class="modal-body">
-          <p class="pb-3"><span>Chọn một mã đê thi trước khi lưu</span><br>
-          	<span>Gợi ý: Hãy chọn mã đề liên quan đến nội dung,thời gian hiện tại hoặc kết hợp cả hai
-          	 để tránh trùng lặp</span>
+          <p class="p-0, pb-3">
+          	Mọi thay đổi của bạn sẽ được lưu lại, không thể trở lại trạng thái trước đó.
+          	<br>Hãy chắc chắn trước khi bấm xác nhận.
           </p>
-          	<div class="form-group">
- 				 <label for="ma-de-thi">Mã đề:</label>
- 				 <input maxlength="20" placeholder="Eg: Math-Dec-2-2018" type="text" class="form-control" id="ma-de-thi">
-			</div>
         </div>   
         <div class="modal-footer">
-        	<button id="save" type="button" class="btn btn-success">Xác nhận</button>
+        	<button id="btn-yes" type="button" class="btn btn-success">Xác nhận</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
         </div>       
       </div>

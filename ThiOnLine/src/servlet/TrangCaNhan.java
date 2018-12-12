@@ -41,7 +41,7 @@ public class TrangCaNhan extends HttpServlet {
 		// TODO Auto-generated method stub
 		  // Kiểm tra người dùng đã đăng nhập (login) chưa.
 		HttpSession session = request.getSession();
-        TaiKhoan loginedUser = MyUtils.getLoginedUser(session);
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
         // Nếu chưa đăng nhập (login).
         if (loginedUser == null) {
             // Redirect (Chuyển hướng) tới trang login.

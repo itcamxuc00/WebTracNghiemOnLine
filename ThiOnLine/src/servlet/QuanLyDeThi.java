@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.DeThi;
+import beans.MonHoc;
 import connection.DBConnection;
 import utils.DBUtils;
 
@@ -40,10 +41,12 @@ public class QuanLyDeThi extends HttpServlet {
 		}
 		else {
 			List<DeThi> rsList = null;
+			List<MonHoc> mhList = null;
 			String err = null;
 			try {
 				Connection conn = DBConnection.getMyConnection();
 				rsList = DBUtils.LayDSDeThi(conn);
+				mhList = DBUtils.LayMonHoc(conn);
 			}
 			catch(Exception e)
 			{
@@ -51,6 +54,7 @@ public class QuanLyDeThi extends HttpServlet {
 				System.out.println(err);
 			}
 			request.setAttribute("DSDeThi", rsList);
+			request.setAttribute("dsMonHoc", mhList);
 			request.setAttribute("error", err);
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/Admin/QuanLyDeThi.jsp");
 			dispatcher.forward(request, response);

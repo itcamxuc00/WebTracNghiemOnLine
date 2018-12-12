@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+ 
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,9 +25,9 @@
                 <a class="navbar-brand" href="#"><span>Thi trắc nghiệm online</span></a>
                 <ul class="navbar-nav mr-auto">
                 </ul>
-                <span class="navbar-brand dropdown" href="#">
-                    <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        <span>Admin</span>
+                <div class="navbar-brand dropdown">
+                    <a class="dropdown-toggle" id="navbardrop" data-toggle="dropdown">
+                        <span>Quản lý</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="#"><span class="bg-dark text-light float-right" id="number-message">58</span>
@@ -36,7 +36,7 @@
                         <li class="dropdown-item"></li>
                         <li class="dropdown-item"><a href="#"><i class="icon-switch2"></i> Đăng xuất</a></li>
                     </ul>
-                </span>
+                </div>
             </nav>
         </div>
     </div>
@@ -49,7 +49,7 @@
                             <div class="category-content">
                                 <div class="media">
                                     <div class="media-body">
-                                        <span class="media-heading">ADMIN</span>
+                                        <span class="media-heading">Quản lý</span>
                                         <div class="text-size-mini text-muted">
                                             <span class="fs-11">Việt Nam</span>
                                         </div>
@@ -60,7 +60,8 @@
                         <div class="sidebar-category">
                             <nav class="category-content p-0">
                                 <ul class="navigation">
-                                    <li class="nav-item">Lớp học</li>
+                                   <li class="nav-item"><a style="color:white" href="QuanLyLopHoc" >Lớp học</a></li>
+                                    <li class="nav-item"><a style="color:white" href="NguoiDung" > Học sinh</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -91,6 +92,8 @@
                                     <tr>
                                         <th>Mã lớp học</th>
                                         <th>Tên lớp học</th>
+                                        <th>Ngày kết thúc</th>
+                                        <th>Sỉ số hiện tại</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -101,12 +104,14 @@
                                                 <span data-toggle="dropdown" class="dropdown-toggle">${lophoc.maLop }</span>
                                                 <ul class="dropdown-menu">
                                                     <li class="dropdown-item"><a href="XoaLopHoc?maLop=${lophoc.maLop }">Xóa</a></li>
-                                                    <li id="${lophoc.maLop }" data-target="#fac" data-toggle="modal" class="dropdown-item">Xem
+                                                    <li data-ten="${lophoc.tenLop}" data-ma="${lophoc.maLop}" data-target="#fac" data-toggle="modal" class="edit dropdown-item">Xem
                                                         và sửa</li>
                                                 </ul>
                                             </div>
                                         </td>
                                         <td>${lophoc.tenLop}</td>
+                                        <td>${lophoc.ngayKetThuc}</td>
+                                        <td>${lophoc.soHocSinh}</td>
                                     </tr>
                                     </c:forEach>
                                 </tbody>
@@ -127,38 +132,25 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Lớp học 1</h4>
+                                    <h4 id="modal-title" class="modal-title"></h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="class-profile">
-                                        <div class="d-flex">
-                                            <div class="col">
-                                                <h5 class="text-primary">Học sinh đã tham gia</h5>
-                                                <div class="list-members delete-student">                                                 
-                                                    <div class="d-flex list-member-item">
-                                                        <p class="class-id">occo01</p>
-                                                        <p class="class-name">Sansa Stark</p>
-                                                        <div><button data-target="#accept-delete" data-toggle="modal"
-                                                                class="btn delete-item btn-danger">Xóa</button></div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <h5 class="text-primary">Thêm học sinh</h5>
-                                                <div class="list-members add-student">
-                                                    <div class="d-flex list-member-item">
-                                                        <p class="class-id">Hskkk12</p>
-                                                        <p class="class-name">Duy Trần</p>
-                                                        <div><button class="btn delete-item btn-success">Thêm</button></div>
-                                                    </div>
-                                                    <div class="d-flex list-member-item">
-                                                        <p class="class-id">Hskkk12</p>
-                                                        <p class="class-name">Duy Trần</p>
-                                                        <div><button class="btn delete-item btn-success">Thêm</button></div>
-                                                    </div>
-                                                </div>
+                                        <div>
+                                        <ul class="nav nav-tabs">
+										    <li class="nav-item">
+										      <a id="nav-not-in" class="nav-link active" data-toggle="tab" href="#list-not-in">Thêm học sinh</a>
+										    </li>
+										    <li class="nav-item">
+										      <a id="nav-in" class="nav-link" data-toggle="tab" href="#list-in">Đã tham gia</a>
+										    </li>
+										  </ul>                       
+                                           <div class="tab-content">
+                                              <div id="list-not-in" class="tab-pane fade list-members">
+                                              </div>
+                                              <div id="list-in" class="list-members  tab-pane fade">                                                 
+                                              </div>
                                             </div>
                                         </div>
                                     </div>
@@ -173,11 +165,11 @@
                                                 <h4 class="modal-title">Bạn có chắc chăn?</h4>
                                                 <button type="button" class="close close-modal">&times;</button>
                                             </div>
-                                            <div class="modal-body">
-                                                Xác nhận xóa occo01 ra khỏi lớp học 1?
+                                            <div id="veri-question" class="modal-body">
+                                                
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger">Xóa</button>
+                                                <button id="btn-accept-delete" type="button" class="btn btn-danger">Xóa</button>
                                                 <button type="button" class="btn btn-secondary close-modal">Close</button>
                                             </div>
                                             <script>
@@ -195,6 +187,129 @@
                     </div>
                 </div>
             </div>
-</body>
+          </div>
+      </div>
+      <script>
+      var daTaiXuong1 = false;
+      var daTaiXuong2 = false;
+        $(document).ready(function () {
+            $("#gui").click(function () {
+                alert("aaaa");
+                $("#ma-mon-hoc").val($("#mon-hoc").val());
+                document.getElementById("form").submit();
+            })
+        })
 
+        $(document).ready(function () {
+            $(".edit").click(function () {
+                var maLop = $(this).data("ma");
+                $("#modal-title").text($(this).data("ten") + " -- " + maLop);
+                var listHSChuaVao = document.getElementById("list-not-in");
+                var LisHSDaVao = document.getElementById("list-in");
+                daTaiXuong1 = false;
+                daTaiXuong2 = false;
+                $("#nav-not-in").click(function(){
+                	if(daTaiXuong1==false)
+					{
+                    	LayDSHocSinhChuaVaoLop(maLop,listHSChuaVao);
+                    	daTaiXuong1 = true;
+					}
+                })
+                 $("#nav-in").click(function(){
+                	if(daTaiXuong2==false)
+					{
+                    	LayDSHocSinhDaVaoLop(maLop,LisHSDaVao);
+                    	daTaiXuong2 = true;
+					}
+                })
+            })
+        })
+          function LayDSHocSinhChuaVaoLop(maLop,listHSChuaVao){
+            $.ajax({
+                    url: "QuanLyLopHoc",
+                    type: "post",
+                    data: { tool: "them", maLop: maLop },
+                    success: function (responsejson) {
+                        listHSChuaVao.innerHTML = "";
+                        $.each(responsejson, function (key, value) {
+                            var tmp = document.createElement("div");
+                            tmp.className = "d-flex list-member-item";
+                            tmp.id ="not-in-" + value['TenTK'];
+                            tmp.innerHTML = '<p>' + value['TenTK'] + '</p>'
+                            + '<p>' + value['TenHocSinh'] + '</p>'
+                            + '<div><button '
+                            + 'data-ma = "' + value['TenTK'] + '"'
+                            + 'data-ten = "' + value['TenHocSinh'] + '"'
+                            +'class="btn btn-success add-h">Thêm</button></div>'                                
+                            listHSChuaVao.appendChild(tmp);
+                        })
+                            $(".add-h").click(function(){
+                            var tenTK = $(this).data("ma");
+                            var tenHocSinh = $(this).data("ten");
+                            $.ajax({
+                                url:("XoaKhoiLop"),
+                                type:"post",
+                                data:{tool:"them", tenTK:tenTK, maLop:maLop},
+                                success:function(status){
+                                    if(status=="ok"){
+                                        var old =  document.getElementById("not-in-"+tenTK);
+                                        listHSChuaVao.removeChild(old);
+                                        daTaiXuong2 = false;
+                                    }
+                                    else alert(status);
+                                }
+                            })
+                        })
+                    }
+                })
+            }
+        
+        function LayDSHocSinhDaVaoLop(maLop,LisHSDaVao){
+            $.ajax({
+                url: "QuanLyLopHoc",
+                type: "post",
+                data: { tool: "xoa", maLop: maLop },
+                success: function (responsejson) {
+                    LisHSDaVao.innerHTML = "";
+                    $.each(responsejson, function (key, value) {
+                        var tmp = document.createElement("div");
+                        tmp.className = "d-flex list-member-item";
+                        tmp.id ="in-" + value['TenTK'];
+                        tmp.innerHTML = '<p>' + value['TenTK'] + '</p>'
+                        + '<p>' + value['TenHocSinh'] + '</p>'
+                        + '<div><button data-target="#accept-delete" data-toggle="modal"'
+                        + 'data-ma = "' + value['TenTK'] + '"'
+                        + 'data-ten = "' + value['TenHocSinh'] + '"'
+                        +'class="btn btn-danger delete-h">Xóa</button></div>'                                
+                        LisHSDaVao.appendChild(tmp);
+                    })
+                        $(".delete-h").click(function(){
+                        	var tenTK = $(this).data("ma");
+                        	var tenHocSinh = $(this).data("ten");
+                        	$("#veri-question").text("Bạn muốn xóa"+tenHocSinh+" ra khỏi lớp?" );
+                        	$("#btn-accept-delete").unbind();
+                        	$("#btn-accept-delete").click(function(){
+                        	alert("haha");
+                            $.ajax({
+                                url:"XoaKhoiLop",
+                                type:"post",
+                                data:{tool:"xoa",tenTK:tenTK, maLop:maLop},
+                                success: function(status){
+                                    if(status=="ok")
+                                    {
+                                        var old =  document.getElementById("in-"+tenTK);
+                                        LisHSDaVao.removeChild(old);
+                                        daTaiXuong1 = false;
+                                    }
+                                    else alert(status);
+                                }
+                            })
+                        })
+                    })
+                }
+            })
+        }
+        
+    </script>
+</body>
 </html>

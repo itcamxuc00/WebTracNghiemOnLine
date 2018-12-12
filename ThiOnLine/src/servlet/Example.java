@@ -42,7 +42,7 @@ public class Example extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		TaiKhoan daDangNhap = MyUtils.getLoginedUser(session);
+		TaiKhoan daDangNhap = MyUtils.getTaiKhoanDangNhap(session);
 		if(daDangNhap==null)
 		{
 			response.sendRedirect("Home");
@@ -104,6 +104,7 @@ public class Example extends HttpServlet {
 				String baiThi= request.getParameter("baiThi");
 				String dapAn= DBUtils.LayDapAn(conn, luotThi.getMaDe());
 				Diem = MathFunction.ChamDiem(baiThi, dapAn);
+				System.out.println(dapAn);
 				err = null;
 			}
 		}
@@ -111,6 +112,7 @@ public class Example extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			err = e.getMessage();		
+			System.out.println(err);
 		}
 		request.setAttribute("error", err);
 		request.setAttribute("phut", thoiGianLamBai/60);

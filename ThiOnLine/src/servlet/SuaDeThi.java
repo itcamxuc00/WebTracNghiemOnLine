@@ -1,32 +1,35 @@
 package servlet;
 
-
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import beans.DeThi;
+import beans.LayDeThiRs;
 import connection.DBConnection;
 import utils.DBUtils;
+import utils.MyUtils;
 
 /**
- * Servlet implementation class LuuDeThi
+ * Servlet implementation class SuaDeThi
  */
-@WebServlet("/LuuDeThi")
-public class LuuDeThi extends HttpServlet {
+@WebServlet("/SuaDeThi")
+public class SuaDeThi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LuuDeThi() {
+    public SuaDeThi() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +39,21 @@ public class LuuDeThi extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String maDe = request.getParameter("maDe");
+		String monHoc = request.getParameter("monHoc");
+		try {
+			Connection conn = DBConnection.getMyConnection();
+			java.util.List<LayDeThiRs> list = DBUtils.LayDeThi(conn, maDe);
+			request.setAttribute("dsCauHoi",list );
+			request.setAttribute("monHoc", monHoc);
+			HttpSession session = request.getSession();
+			MyUtils.setDeThi(session, maDe);
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/Admin/SuaDeThi.jsp");
+			dispatcher.forward(request, response);
+		}
+		catch( Exception e) {
+			
+		}
 	}
 
 	/**
@@ -47,16 +64,14 @@ public class LuuDeThi extends HttpServlet {
 		// TODO Auto-generated method stub
 		 String status="";
 		 try {
-			 String arr =  request.getParameter("arr");
-			 String maDeThi = request.getParameter("maDeThi");
+			 String arr =  request.getParameter("arr");	
+			 HttpSession session = request.getSession();
+			 String maDeThi = MyUtils.getDeThi(session);
 			 ArrayList<String> listdata = null;
 			 Gson gsonn = new Gson();
 			 java.sql.Connection conn = DBConnection.getMyConnection();
 			 listdata = gsonn.fromJson(arr, ArrayList.class);
-			 DeThi dt = new DeThi();
-			 dt.setMaDeThi(maDeThi);
-			 DBUtils.LuuDeThi(conn, dt);
-			 System.out.print(maDeThi);
+			 DBUtils.XoaNDDeThi(conn, maDeThi);
 			 for(int i=0;i<listdata.size();i++)
 			 {
 				 DBUtils.LuuNDDeThi(conn, maDeThi, listdata.get(i));

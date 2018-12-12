@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import beans.HocSinh;
 import beans.LopHoc;
 import connection.DBConnection;
 import utils.DBUtils;
@@ -54,9 +57,30 @@ public class QuanLyLopHoc extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		List<HocSinh> list = null;
+		String responsejson = null;
+		String err = null;
+		String tool = request.getParameter("tool");
+		String maLop = request.getParameter("maLop");
+		try {
+			Connection conn = DBConnection.getMyConnection();
+			if(tool.equals("them"))
+			{
+				list = DBUtils.LayDSHocSinhChuaVaoLop(conn, maLop);
+			}
+			else
+			{
+				list = DBUtils.LayDSHocSinhDaVaoLop(conn, maLop);
+			}
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			responsejson = new Gson().toJson(list);
+			response.getWriter().write(responsejson);
+		}
+		catch (Exception e) {
+			err = e.getMessage();
+			System.out.println(err);
+		}
 	}
-
 }

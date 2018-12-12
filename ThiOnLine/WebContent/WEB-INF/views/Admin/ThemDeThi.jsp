@@ -92,50 +92,54 @@
                                             <div class="col">
                                                 <div class="tabbable tab-content-bordered">
                                                     <div class="tab-content">
-                                                        <form id="form" action="ThemDeThi" method="get">
-                                                            <div class="d-flex">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label class="control-label">Mã đề thi</label>
-                                                                        <input id="ma-de" name="maDeThi" type="text"
-                                                                            class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <label class="control-label">Môn học</label>
-                                                                    <select id="mon-hoc" name="monHoc" class="custom-select">
-                                                                    	<c:forEach items="${DSLopHoc }" var="monHoc">
-                                                                  			<option value="${monHoc.maMonHoc }"><span>${monHoc.tenMonHoc}-</span><span>${monHoc.maMonHoc}</span></option>
-                                                                    	</c:forEach>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label class="control-label">Số câu dễ</label>
-                                                                        <input id="cau-tb" name="soCauDe" type="text"
-                                                                            class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label class="control-label">Số câu trung bình</label>
-                                                                        <input id="cau-de" name="soCauTrungBinh" type="text"
-                                                                            class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label class="control-label">Số câu khó</label>
-                                                                        <input id="cau-kho" name="soCauKho" type="text"
-                                                                            class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div style="text-align: center" id="gui" class="col mt-4 pb-3"> <button type="submit" class="btn btn-primary">Tiếp tục</button></div>                   
-                                                        </form>
-                                                    </div>
+														<form id="form" action="ThemDeThi" method="get">
+															<div class="d-flex">
+																<div class="col">
+																	<div class="form-group">
+																		<label class="control-label">Mã đề thi</label> <input
+																			id="ma-de" name="maDeThi" type="text"
+																			class="form-control" />
+																	</div>
+																</div>
+																<div class="col">
+																	<label class="control-label">Môn học</label> <select
+																		id="mon-hoc" name="monHoc" class="custom-select">
+																		<c:forEach items="${DSLopHoc }" var="monHoc">
+																			<option value="${monHoc.maMonHoc }"><span>${monHoc.tenMonHoc}-</span><span>${monHoc.maMonHoc}</span></option>
+																		</c:forEach>
+																	</select>
+																</div>
+															</div>
+															<div class="d-flex">
+																<div class="col">
+																	<div class="form-group">
+																		<label class="control-label">Số câu dễ</label> <input
+																			id="cau-tb" name="soCauDe" type="text"
+																			class="form-control" />
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="form-group">
+																		<label class="control-label">Số câu trung bình</label>
+																		<input id="cau-de" name="soCauTrungBinh" type="text"
+																			class="form-control" />
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="form-group">
+																		<label class="control-label">Số câu khó</label> <input
+																			id="cau-kho" name="soCauKho" type="text"
+																			class="form-control" />
+																	</div>
+																</div>
+															</div>
+															<div style="text-align: center" id="gui"
+																class="col mt-4 pb-3">
+																<button type="submit" class="btn btn-primary">Tiếp
+																	tục</button>
+															</div>
+														</form>
+													</div>
                                                 </div>
                                             </div>
                                         </div>

@@ -31,7 +31,7 @@
                 </ul>
                 <div class="navbar-brand dropdown" >
                     <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        <span>Admin</span>
+                        <span>Quản lí</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="#"><span class="bg-dark text-light float-right" id="number-message">58</span>
@@ -53,7 +53,7 @@
                             <div class="category-content">
                                 <div class="media">
                                     <div class="media-body">
-                                        <span class="media-heading">ADMIN</span>
+                                        <span class="media-heading">Quản lí</span>
                                         <div class="text-size-mini text-muted">
                                             <span class="fs-11">Việt Nam</span>
                                         </div>
@@ -64,9 +64,8 @@
                         <div class="sidebar-category">
                             <nav class="category-content p-0">
                                 <ul class="navigation">
-                                    <li data-toggle="collapse" data-target="#question" class="nav-item">Câu hỏi</li>
-                                    <li class="nav-item">Lớp học</li>
-                                    <li class="nav-item">Học sinh</li>
+                                    <li class="nav-item"><a style="color:white" href="QuanLyLopHoc" >Lớp học</a></li>
+                                    <li class="nav-item"><a style="color:white" href="NguoiDung" > Học sinh</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -109,10 +108,11 @@
                                         <td>
                                             <div class="dropdown">
                                                 <span data-toggle="dropdown" class="dropdown-toggle">${hocsinh.tenTK}</span>
-                                                <ul style="min-height: 150px" class="dropdown-menu">
+                                                <ul  class="dropdown-menu">
                                                     <li data-ten="${hocsinh.tenNguoiDung}" data-target="#fac" id="${hocsinh.tenTK}" data-toggle="modal" class="dropdown-item edit">Xem
                                                         và sửa</li>
                                                     <li class="dropdown-item"><a href="XoaHocSinh?tenTK=${hocsinh.tenTK}">Xóa</a></li>
+                                                    <li class="dropdown-item" data-toggle="modal" data-target="#theHocSinh">Thêm</li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -186,8 +186,48 @@
                     </div>
                 </div>
             </div>
-            </div>
+           </div>
          </div>        
+           <div class="modal fade" id="theHocSinh">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm học sinh</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="control-label">Tên tài khoản</label>
+                                    <input id="ten-tk"  type="text" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Tên học sinh</label>
+                                    <input id="ten-hs"  type="text" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Mật khẩu</label>
+                                    <input id="mat-khau"  type="text" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Ngày Sinh</label>
+                                    <input id="ngay-sinh" name="maDeThi" type="date" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Địa chỉ</label>
+                                    <input id="dia-chi" name="maDeThi" type="text" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Số điện thoại</label>
+                                    <input id="sdt" name="maDeThi" type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="add" type="button" class="btn btn-danger">Thêm</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
        <script>
         $(document).ready(function () {
             $(".edit").click(function () {
@@ -238,5 +278,30 @@
             })
         })
     </script>
+    
+       <script>
+                    $(document).ready(function(){
+                        $("#add").click(function(){
+                            var tenTK = $("#ten-tk").val();
+                            alert(tenTK);
+                            var tenHS = $("#ten-hs").val();
+                            var matKhau = $("#mat-khau").val();
+                            var ngaySinh = $("#ngay-sinh").val();
+                            var diaChi = $("#dia-chi").val();
+                            var soDT = $("#sdt").val();
+
+                            var hocSinh = {TenTK:tenTK,TenNguoiDung:tenHS, MatKhau:matKhau,DiaChi:diaChi, SDT:soDT};
+                            $.ajax({
+                                url:"NguoiDung",
+                                type: "post",
+                                data: {hocSinh: JSON.stringify(hocSinh)},
+                                success: function(status){
+                                    if(status=="ok") alert("Thêm thành công");
+                                    else alert(status);
+                                }
+                            })
+                        })
+                    })
+                </script>
 </body>
 </html>
