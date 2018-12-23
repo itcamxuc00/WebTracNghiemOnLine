@@ -4,7 +4,7 @@ for (i = 0; i < lq.length; i++) {
 	lq[i].innerHTML = i + 1;
 	lq[i].id = "c" + (i + 1);
 	var tmp = document.createElement("a");
-	tmp.className = "btn btn-outline-primary";
+	tmp.className = "btn btn-outline-primary ml-1";
 	tmp.innerHTML = i + 1;
 	tmp.href = "#c" + (i + 1);
 	parent.appendChild(tmp);
@@ -48,3 +48,11 @@ $(document).ready(function() {
 		});
 	})
 })
+
+ $("input:radio").change(function(){
+     var ma = $(this).attr('name');
+     var el = document.querySelector('span[data-ma="'+ma+'"');
+     var iid = el.id;
+     var but = document.querySelector('a[href="#'+iid+'"');
+     but.setAttribute("class","btn btn-primary ml-1");
+ })
