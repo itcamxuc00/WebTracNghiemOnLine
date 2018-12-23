@@ -13,11 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.LayDeThiRs;
 import beans.LuotThi;
+import beans.ND_DeThi;
 import beans.TaiKhoan;
 import connection.DBConnection;
 import utils.DBUtils;
+import utils.DETHI_PLUS_DAO;
 import utils.MathFunction;
 import utils.MyUtils;
 
@@ -52,7 +53,7 @@ public class Example extends HttpServlet {
 			String tenTK = daDangNhap.getTenTK();
 			String maDe = request.getParameter("maDe");
 			String maLop = request.getParameter("maLop");
-	    	List<LayDeThiRs> list = null;
+	    	List<ND_DeThi> list = null;
 	    	LuotThi luotThi = null;
 	    	String err=null;
 			if(maDe==null||maLop==null||maDe==""||maLop=="") response.setStatus(404);
@@ -65,7 +66,7 @@ public class Example extends HttpServlet {
 						else
 						{
 							MyUtils.setLuotThi(session, luotThi);
-							list = DBUtils.LayDeThi(conn, maDe);
+							list = DETHI_PLUS_DAO.LayDeThi(conn, maDe);
 							request.setAttribute("luotThi",luotThi);
 							request.setAttribute("DSCauHoi", list);
 							RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/User/BaiThi.jsp");
@@ -102,7 +103,7 @@ public class Example extends HttpServlet {
 			else
 			{
 				String baiThi= request.getParameter("baiThi");
-				String dapAn= DBUtils.LayDapAn(conn, luotThi.getMaDe());
+				String dapAn= DETHI_PLUS_DAO.LayDapAn(conn, luotThi.getMaDe());
 				Diem = MathFunction.ChamDiem(baiThi, dapAn);
 				System.out.println(dapAn);
 				err = null;

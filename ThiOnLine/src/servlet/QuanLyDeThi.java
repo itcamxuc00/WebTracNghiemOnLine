@@ -15,7 +15,7 @@ import beans.DeThi;
 import beans.MonHoc;
 import connection.DBConnection;
 import utils.DBUtils;
-
+import utils.DETHI_PLUS_DAO;
 /**
  * Servlet implementation class QuanLyDeThi
  */
@@ -43,9 +43,14 @@ public class QuanLyDeThi extends HttpServlet {
 			List<DeThi> rsList = null;
 			List<MonHoc> mhList = null;
 			String err = null;
+			int page=1;
+			String p = request.getParameter("page");
+			int soTrang = 0;
 			try {
+				if(p!=null) page = Integer.parseInt(p);
 				Connection conn = DBConnection.getMyConnection();
-				rsList = DBUtils.LayDSDeThi(conn);
+				rsList = DETHI_PLUS_DAO.LayDSDeThi(conn,page);
+				soTrang = DETHI_PLUS_DAO.tinhTongSoTrang(conn);
 				mhList = DBUtils.LayMonHoc(conn);
 			}
 			catch(Exception e)
@@ -56,6 +61,8 @@ public class QuanLyDeThi extends HttpServlet {
 			request.setAttribute("DSDeThi", rsList);
 			request.setAttribute("dsMonHoc", mhList);
 			request.setAttribute("error", err);
+			request.setAttribute("trang", page);
+			request.setAttribute("soTrang", soTrang);
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/Admin/QuanLyDeThi.jsp");
 			dispatcher.forward(request, response);
 		}

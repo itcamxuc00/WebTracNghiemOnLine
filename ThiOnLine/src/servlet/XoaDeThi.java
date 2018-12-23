@@ -40,7 +40,7 @@ public class XoaDeThi extends HttpServlet {
 		}
 		catch(Exception e)
 		{
-			
+			System.out.print(e.getMessage());
 		}
 	}
 

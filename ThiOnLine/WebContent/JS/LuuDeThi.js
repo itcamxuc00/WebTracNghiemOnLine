@@ -8,7 +8,7 @@ $(document).ready(function(){
             arr.push(a[i].id);
          }
          $.ajax({
-             url:"LuuDeThi",
+             url:"ThemDeThi",
              type:"post",
              data:{arr:JSON.stringify(arr),maDeThi:maDeThi},
              success:function(status){

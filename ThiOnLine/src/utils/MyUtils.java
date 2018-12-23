@@ -68,6 +68,17 @@ public class MyUtils {
 	    	session.removeAttribute("deThi");
 	    }
 	    
+	    public static String getMonHoc(HttpSession session)
+	    {
+	    	String deThi = (String)session.getAttribute("monHoc");
+	    	return deThi;
+	    }
+	    
+	    public static void setMonHoc(HttpSession session, String monHoc)
+	    {
+	    	session.setAttribute("monHoc", monHoc);
+	    }
+	    
 	    // Lưu thông tin người dùng vào Cookie.
 	    public static void storeUserCookie(HttpServletResponse response, TaiKhoan user) {
 	        System.out.println("Store user cookie");
@@ -77,6 +88,7 @@ public class MyUtils {
 	        response.addCookie(cookieUserName);
 	    }
 	 
+	    
 	    public static String getUserNameInCookie(HttpServletRequest request) {
 	        Cookie[] cookies = request.getCookies();
 	        if (cookies != null) {

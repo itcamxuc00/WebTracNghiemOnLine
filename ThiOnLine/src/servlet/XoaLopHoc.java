@@ -41,6 +41,7 @@ public class XoaLopHoc extends HttpServlet {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			response.setStatus(404);
 		}
 	}
 

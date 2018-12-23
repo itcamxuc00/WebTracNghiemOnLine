@@ -61,7 +61,6 @@ public class Home extends HttpServlet {
 				if(tk==null) err = "Tài khoản hoặc mật khẩu không đúng";
 				else
 				{
-					System.out.print(tk.getQuyen());
 		            HttpSession session = request.getSession();
 		            MyUtils.setTaiKhoanDangNhap(session, tk);
 					if(tk.getQuyen()==1)
@@ -69,9 +68,19 @@ public class Home extends HttpServlet {
 			            response.sendRedirect(request.getContextPath() + "/TrangCaNhan");
 			            return;
 					}
-					else
+					else if(tk.getQuyen()==2)
 					{
-						 response.sendRedirect(request.getContextPath() + "/NguoiDung");
+						 response.sendRedirect(request.getContextPath() + "/QuanLyHocSinh");
+						 return;
+					}
+					else if(tk.getQuyen()==3) 
+					{
+						 response.sendRedirect(request.getContextPath() + "/QuanLyDeThi");
+						 return;
+					}
+					else if(tk.getQuyen()==4)
+					{
+						 response.sendRedirect(request.getContextPath() + "/QuanLyCauHoi");
 						 return;
 					}
 				}

@@ -11,8 +11,7 @@
     <title>User</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -27,50 +26,7 @@
 
 <body>
     <div class="root">
-        <header id="header">
-            <nav id="navbar-user" class="navbar custom-navbar navbar-expand-sm navbar-dark fixed-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="logo">
-                                <img class="img-fluid" src="images\logo.png">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="d-flex flex-row-reverse">
-                                <div class="navbar-item">
-                                    <div class="dropdown">
-                                        <div data-toggle="dropdown" class="d-inline-block">
-                                            <span class="size-18 d-none d-md-inline">Malcolm Graves</span>
-                                            <span class="size-18 dropdown-toggle"></span>
-                                        </div>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item">Cái gì đó</li>
-                                            <li class="dropdown-item">Cái gì đó</li>
-                                            <li class="dropdown-item">Đăng xuất</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="navbar-item">
-                                    <div class="navbar-image user-avatar">
-                                        <a href=""><img class="rounded-circle" src="images\user-avt.png"></a>
-                                    </div>
-                                </div>
-                                <div class="navbar-item dropdown mr-3">
-                                    <div class="d-inline-block" data-toggle="dropdown">
-                                        <span class="d-none d-lg-inline">Lớp học của bạn</span>
-                                        <i class="fa fa-home d-lg-none" aria-hidden="true"></i>
-                                        <span class="dropdown-toggle"></span>
-                                    </div>
-                                    <ul class="dropdown-menu">
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </header>
+    	<jsp:include page="_Header.jsp"></jsp:include>
         <section id="body-block" class="bg-whitesmoke">
             <div class="container">
                 <div class="page-content d-flex">
@@ -154,115 +110,8 @@
                 </div>
             </div>
         </div>
-        <section id="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 footer_col">
-                        <div class="footer_column footer_contact">
-                            <div class="logo_container">
-                                <div class="logo"><a href="#">G4-Saturday</a></div>
-                            </div>
-                            <div class="footer_title">Đặt câu hỏi? Trợ giúp 24/7</div>
-                            <div class="footer_phone">+84 326845214</div>
-                            <div class="footer_contact_text">
-                                <p>01 Võ Văn Ngân - Thủ Đức</p>
-                                <p>TP.Hồ Chí Minh - Việt Nam</p>
-                            </div>
-                            <div class="footer_social">
-                                <ul>
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-google"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 offset-lg-2">
-                        <div class="footer_column">
-                            <div class="footer_title">Tìm kiếm nhanh</div>
-                            <ul class="footer_list">
-                                <li><a href="#">Toán Học</a></li>
-                                <li><a href="#">Vật Lí</a></li>
-                                <li><a href="#">Hóa Học</a></li>
-                                <li><a href="#">Sinh Học</a></li>
-                                <li><a href="#">Ngoại ngữ</a></li>
-                                <li><a href="#">Tin Học</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2">
-                        <div class="footer_column">
-                            <ul class="footer_list footer_list_2">
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2">
-                        <div class="footer_column">
-                            <div class="footer_title">Liên hệ</div>
-                            <ul class="footer_list">
-                                <li><a href="#">Huỳnh Công Chiến</a></li>
-                                <li><a href="http://facebook.com/trankhuongduy1123">Trần Khương Duy</a></li>
-                                <li><a href="#">Chu Thị Hương Giang</a></li>
-                                <li><a href="#">Võ Đình Khởi</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="copyright">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
-                            <div class="copyright_content">
-                                Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This
-                                website is made by G4-Saturday
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div> 
 </body>
 <script src="JS/PostMethod.js" type="text/javascript"></script>
- <script>
-        var lq = document.getElementsByClassName("index-question");
-        var parent = document.getElementById("questions-complete");
-        for (i = 0; i < lq.length; i++) {
-            lq[i].innerHTML = i+1;
-            lq[i].id = "c" + (i+1);
-            var tmp = document.createElement("a");
-            tmp.className = "btn btn-outline-primary";
-            tmp.innerHTML = i +1;
-            tmp.href = "#c" + (i+1);
-            parent.appendChild(tmp);
-        }
-    </script>  
-    <script>
-        $(document).ready(function(){
-            $("#btn-accept-submit").click(function(){
-                var baiThi = "";
-                var luachon ;
-               var al = document.getElementsByClassName("answorten");
-                for(i=0;i<al.length;i++){
-                   luachon = "*";
-                   var ch = al[i].querySelectorAll('input[type="radio"]')
-                    for(j=0;j<ch.length;j++)
-                    {
-                        if(ch[j].checked == true) luachon = ch[j].getAttribute("data-choice");
-                    }
-                    baiThi += luachon;
-                }
-				post('Example',{baiThi:baiThi});
-            })
-        })
-    </script>  
+  <script src="JS/Thi.js" type="text/javascript"></script>
 </html>

@@ -13,10 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.BG_DeThi;
+import beans.LopHoc;
 import beans.TaiKhoan;
 import beans.ThongTinTK;
 import connection.DBConnection;
 import utils.DBUtils;
+import utils.DETHI_PLUS_DAO;
 import utils.MyUtils;
 
 /**
@@ -44,18 +46,21 @@ public class TrangCaNhan extends HttpServlet {
         TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
         // Nếu chưa đăng nhập (login).
         if (loginedUser == null) {
-            // Redirect (Chuyển hướng) tới trang login.
+
             response.sendRedirect(request.getContextPath() + "/Home");
             return;
         }
         ThongTinTK thongTinTK = null;
         List<BG_DeThi> dsDeThi = null;
+        List<LopHoc> dsLopHoc = null;
         String err = null;
         try {
         	Connection conn = DBConnection.getMyConnection();
         	thongTinTK = DBUtils.LayThongTin(conn, loginedUser.getTenTK());
-        	dsDeThi = DBUtils.LayDSDeThi(conn, loginedUser.getTenTK());
+        	dsDeThi = DETHI_PLUS_DAO.LayDSDeThi(conn, loginedUser.getTenTK());
+        	dsLopHoc = DBUtils.LayDSLopHoc(conn, loginedUser.getTenTK());
         	request.setAttribute("dsDeThi", dsDeThi);
+        	request.setAttribute("dsLopHoc", dsLopHoc);
         	request.setAttribute("user", thongTinTK);
         }
         catch(Exception e) {

@@ -17,6 +17,7 @@ import beans.HocSinh;
 import beans.LopHoc;
 import connection.DBConnection;
 import utils.DBUtils;
+import utils.HOCSINH_DAO;
 
 /**
  * Servlet implementation class QuanLyLopHoc
@@ -67,11 +68,11 @@ public class QuanLyLopHoc extends HttpServlet {
 			Connection conn = DBConnection.getMyConnection();
 			if(tool.equals("them"))
 			{
-				list = DBUtils.LayDSHocSinhChuaVaoLop(conn, maLop);
+				list = HOCSINH_DAO.LayDSHocSinhChuaVaoLop(conn, maLop);
 			}
 			else
 			{
-				list = DBUtils.LayDSHocSinhDaVaoLop(conn, maLop);
+				list = HOCSINH_DAO.LayDSHocSinhDaVaoLop(conn, maLop);
 			}
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");

@@ -1,6 +1,5 @@
 package beans;
 
-import java.sql.Timestamp;
 
 
 public class BG_DeThi {
@@ -9,8 +8,8 @@ public class BG_DeThi {
 	private  String MaLop;
 	private String TenLop;
 	private  int ThoiLuong;
-	private Timestamp TGKetThuc;
-	private Timestamp TGBatDau;
+	private String TGKetThuc;
+	private String TGBatDau;
 	private int SoLanLamBai;
 	
 	public String getMaDeThi() {
@@ -43,16 +42,16 @@ public class BG_DeThi {
 	public void setTieuDe(String tieuDe) {
 		TieuDe = tieuDe;
 	}
-	public Timestamp getTGKetThuc() {
+	public String getTGKetThuc() {
 		return TGKetThuc;
 	}
-	public void setTGKetThuc(Timestamp tGKetThuc) {
+	public void setTGKetThuc(String tGKetThuc) {
 		TGKetThuc = tGKetThuc;
 	}
-	public Timestamp getTGBatDau() {
+	public String getTGBatDau() {
 		return TGBatDau;
 	}
-	public void setTGBatDau(Timestamp tGBatDau) {
+	public void setTGBatDau(String tGBatDau) {
 		TGBatDau = tGBatDau;
 	}
 	public int getSoLanLamBai() {
@@ -61,4 +60,5 @@ public class BG_DeThi {
 	public void setSoLanLamBai(int soLanLamBai) {
 		SoLanLamBai = soLanLamBai;
 	}
+	
 }

@@ -1,6 +1,5 @@
 package beans;
 
-import java.sql.Date;
 
 //class này sử dụng cho proc LayDanhSachHocSinh
 //Không dùng produce thì có lẻ không cần cái này
@@ -10,7 +9,7 @@ public class ThongTinTK {
 	private String TenTK;
 	private String MatKhau;
 	private String TenNguoiDung;
-	private Date NgaySinh;
+	private String NgaySinh;
 	private int SoLuongLopHoc;
 	private String DiaChi;
 	private String SDT;
@@ -33,12 +32,8 @@ public class ThongTinTK {
 	public void setTenNguoiDung(String tenNguoiDung) {
 		TenNguoiDung = tenNguoiDung;
 	}
-	public Date getNgaySinh() {
-		return NgaySinh;
-	}
-	public void setNgaySinh(Date ngaySinh) {
-		NgaySinh = ngaySinh;
-	}
+	
+	
 	public int getSoLuongLopHoc() {
 		return SoLuongLopHoc;
 	}
@@ -56,5 +51,11 @@ public class ThongTinTK {
 	}
 	public void setSDT(String sDT) {
 		SDT = sDT;
+	}
+	public String getNgaySinh() {
+		return NgaySinh;
+	}
+	public void setNgaySinh(String ngaySinh) {
+		NgaySinh = ngaySinh;
 	}
 }

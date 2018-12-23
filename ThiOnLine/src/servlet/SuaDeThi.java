@@ -14,9 +14,11 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import beans.LayDeThiRs;
+import beans.DeThi;
+import beans.ND_DeThi;
 import connection.DBConnection;
 import utils.DBUtils;
+import utils.DETHI_PLUS_DAO;
 import utils.MyUtils;
 
 /**
@@ -40,20 +42,51 @@ public class SuaDeThi extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String maDe = request.getParameter("maDe");
-		String monHoc = request.getParameter("monHoc");
-		try {
-			Connection conn = DBConnection.getMyConnection();
-			java.util.List<LayDeThiRs> list = DBUtils.LayDeThi(conn, maDe);
+		String err=null;
+		DeThi dt = null;
+		java.util.List<ND_DeThi> list = null;
+		if(maDe==null ||maDe=="")
+		{
+			 HttpSession session = request.getSession();
+			 maDe = MyUtils.getDeThi(session);
+			 if(maDe==null || maDe=="") return ;
+			 try
+			 {
+				 int soCauDe = Integer.parseInt(request.getParameter("de"));
+				 int soCauTB = Integer.parseInt(request.getParameter("trungBinh"));
+				 int soCauKho = Integer.parseInt(request.getParameter("kho"));
+				 Connection conn = DBConnection.getMyConnection();
+				 String	maMonHoc = DBUtils.layMaMonHoc(conn, maDe);
+				 dt = new DeThi();
+				 dt.setSoCauDe(soCauDe);
+				 dt.setSoCauKho(soCauKho);
+				 dt.setSoCauTrungBinh(soCauTB);
+				 list = DETHI_PLUS_DAO.TaoDeThi(conn, maMonHoc, soCauDe, soCauTB, soCauKho);
+			 }
+			 catch (Exception e) {
+				err = e.getMessage();
+			}
+		}
+		else
+		{
+			try {
+				Connection conn = DBConnection.getMyConnection();
+				list = DETHI_PLUS_DAO.LayDeThi(conn, maDe);
+				dt = DETHI_PLUS_DAO.LayThongTinDeThi(conn, maDe);
+				HttpSession session = request.getSession();
+				MyUtils.setDeThi(session, maDe);
+			}
+			catch( Exception e) {
+				err = e.getMessage();
+			}
+		}
+		
 			request.setAttribute("dsCauHoi",list );
-			request.setAttribute("monHoc", monHoc);
-			HttpSession session = request.getSession();
-			MyUtils.setDeThi(session, maDe);
+			request.setAttribute("eror",err );
+			request.setAttribute("soCauHoi", dt);
+			System.out.println(dt.getSoCauDe());
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/Admin/SuaDeThi.jsp");
 			dispatcher.forward(request, response);
-		}
-		catch( Exception e) {
-			
-		}
 	}
 
 	/**
