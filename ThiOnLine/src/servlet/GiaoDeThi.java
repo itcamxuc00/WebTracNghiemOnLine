@@ -89,7 +89,10 @@ public class GiaoDeThi extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/Home");
 			return;
 		} else if (loginedUser.getQuyen() != 3)
-			response.setStatus(404);
+			{
+				response.setStatus(404);
+				return;
+			}
 
 		String jsonString = request.getParameter("querry");
 		BG_DeThi bg = new BG_DeThi();

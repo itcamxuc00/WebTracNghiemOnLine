@@ -43,7 +43,7 @@ public class DongDeThi extends HttpServlet {
 		if (loginedUser == null) {
 			response.sendRedirect(request.getContextPath() + "/Home");
 			return;
-		} else if (loginedUser.getQuyen() != 2)
+		} else if (loginedUser.getQuyen() != 3)
 		{
 			response.setStatus(404);
 			return;
@@ -51,7 +51,7 @@ public class DongDeThi extends HttpServlet {
 		String maDe = request.getParameter("made");
 		try {
 			Connection conn = DBConnection.getMyConnection();
-			String lop = request.getParameter("made");
+			String lop = request.getParameter("lop");
 			DETHI_PLUS_DAO.DongDeThi(conn, maDe, lop);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

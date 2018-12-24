@@ -103,7 +103,7 @@
 								class="form-control fake-date my-input">
 								</div>
 								<div class="col-12 mt-3 d-flex flex-row-reverse">
-									<button class="btn btn-danger">Xóa</button>
+									<a href="DongDeThi?made=${maDe}&lop=${lop.maLop}" class="btn btn-danger">Xóa</a>
 									<button data-target="${lop.maLop }"
 								class="save-change btn btn-success mr-2">Lưu thay đổi</button>
 								</div>
