@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-
+import beans.TaiKhoan;
 import connection.DBConnection;
-import utils.DBUtils;
+import utils.LOPHOC_DAO;
+import utils.MyUtils;
 
 /**
  * Servlet implementation class XoaKhoiLop
@@ -32,13 +34,25 @@ public class XoaKhoiLop extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=2) 
+		{
+			response.setStatus(404);
+			return;
+		}
+		
 		String status = "Loi roi";
 		try
 		{
 			Connection conn = DBConnection.getMyConnection();
 			String TenTK = request.getParameter("TenTK");
 			String MaLop = request.getParameter("MaLop");
-			DBUtils.XoaKhoiLop(conn, TenTK, MaLop);
+			LOPHOC_DAO.XoaKhoiLop(conn, TenTK, MaLop);
 			status = "done";
 			response.getWriter().write(status);
 		}
@@ -53,6 +67,17 @@ public class XoaKhoiLop extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=2) 
+		{
+			response.setStatus(404);
+			return;
+		}
+		
 		String status = "";
 		try
 		{
@@ -61,8 +86,8 @@ public class XoaKhoiLop extends HttpServlet {
 			String tenTK = request.getParameter("tenTK");
 			String maLop = request.getParameter("maLop");
 			if(tool.equals("them"))
-				DBUtils.ThemVaoLop(conn, maLop, tenTK);
-			else DBUtils.XoaKhoiLop(conn, tenTK, maLop);
+				LOPHOC_DAO.ThemVaoLop(conn, maLop, tenTK);
+			else LOPHOC_DAO.XoaKhoiLop(conn, tenTK, maLop);
 			status = "ok";
 			response.getWriter().write(status);
 		}

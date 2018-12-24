@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 
 import beans.DeThi;
 import beans.ND_DeThi;
+import beans.TaiKhoan;
 import connection.DBConnection;
 import utils.DBUtils;
 import utils.DETHI_PLUS_DAO;
@@ -41,13 +42,23 @@ public class SuaDeThi extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=3)
+		{
+			response.setStatus(404);
+			return;
+		}
+		
 		String maDe = request.getParameter("maDe");
 		String err=null;
 		DeThi dt = null;
 		java.util.List<ND_DeThi> list = null;
 		if(maDe==null ||maDe=="")
 		{
-			 HttpSession session = request.getSession();
 			 maDe = MyUtils.getDeThi(session);
 			 if(maDe==null || maDe=="") return ;
 			 try
@@ -73,7 +84,6 @@ public class SuaDeThi extends HttpServlet {
 				Connection conn = DBConnection.getMyConnection();
 				list = DETHI_PLUS_DAO.LayDeThi(conn, maDe);
 				dt = DETHI_PLUS_DAO.LayThongTinDeThi(conn, maDe);
-				HttpSession session = request.getSession();
 				MyUtils.setDeThi(session, maDe);
 			}
 			catch( Exception e) {
@@ -95,10 +105,20 @@ public class SuaDeThi extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=3) 
+		{
+			response.setStatus(404);
+			return;
+		}
+		
 		 String status="";
 		 try {
 			 String arr =  request.getParameter("arr");	
-			 HttpSession session = request.getSession();
 			 String maDeThi = MyUtils.getDeThi(session);
 			 ArrayList<String> listdata = null;
 			 Gson gsonn = new Gson();

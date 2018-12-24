@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import beans.LuotThi;
 import beans.TaiKhoan;
 import connection.DBConnection;
+import utils.DBUtils;
 import utils.DETHI_PLUS_DAO;
 import utils.MathFunction;
 import utils.MyUtils;
@@ -44,27 +45,6 @@ public class KetQuaThi extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		PDDocument document = new PDDocument();
-		PDPage page = new PDPage();
-		document.addPage(page);
-		PDPageContentStream contentStream = new PDPageContentStream(document, page);
-		contentStream.beginText(); 
-		contentStream.newLineAtOffset(25, 700);
-		contentStream.setFont(PDType1Font.HELVETICA ,30 );
-		contentStream.setLeading(35.5f);
-		contentStream.showText("Your score:                 10");  
-		contentStream.newLine();
-		contentStream.showText("Time to completion:    15m");  
-		contentStream.newLine();
-		contentStream.showText("Date:                           2018-12-12");
-		contentStream.newLine();
-		contentStream.showText("Name:                         Tran Khuong Duy");
-		contentStream.close();
-		String path = getServletContext().getRealPath("WEB-INF/lulu.pdf");
-		document.save(path);
-		document.close();
-		System.out.println(path);
 	}
 
 	/**
@@ -95,6 +75,7 @@ public class KetQuaThi extends HttpServlet {
 				System.out.println(dapAn);
 				err = null;
 			}
+			DBUtils.LuuKetQuaThi(conn, tk.getTenTK(), luotThi.getMaLop(), luotThi.getMaDe(), luotThi.getBatDau(), Diem);
 			PDDocument document = new PDDocument();
 			PDPage page = new PDPage();
 			document.addPage(page);

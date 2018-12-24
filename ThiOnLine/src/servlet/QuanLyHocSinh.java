@@ -49,7 +49,11 @@ public class QuanLyHocSinh extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/Home");
             return;
         }
-        else if(loginedUser.getQuyen()<=1) response.setStatus(404); 
+        else if(loginedUser.getQuyen()!=2) 
+		{
+			response.setStatus(404);
+			return;
+		}
         else {
 				int page=1;
 				String p = request.getParameter("page");
@@ -84,6 +88,18 @@ public class QuanLyHocSinh extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=2)
+		{
+			response.setStatus(404);
+			return;
+		}
+        
 		String json = request.getParameter("hocSinh");
 		String status="";
 		try {

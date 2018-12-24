@@ -8,8 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import beans.TaiKhoan;
 import utils.CAUHOI_DAO;
+import utils.MyUtils;
 
 
 
@@ -32,6 +35,18 @@ public class deleteCauHoi extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=4) 
+		{
+			response.setStatus(404);
+			return;
+		}
+		
 		int MaCauHoi= Integer.parseInt(request.getParameter("macauhoi"));
 		CAUHOI_DAO ch;
 		try {

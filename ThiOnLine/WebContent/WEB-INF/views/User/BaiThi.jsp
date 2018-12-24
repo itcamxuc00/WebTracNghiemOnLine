@@ -57,7 +57,7 @@
                                 <div class="frage">
                                     <div class="row">
                                         <div class="col-2 d-none d-md-block">
-                                            <div class="number bg-dark"><span class="index-question"></span></div>
+                                            <div class="number bg-dark"><span data-ma="${cauhoi.maCauHoi }" class="index-question"></span></div>
                                         </div>
                                         <div class="col-md-10">
                                             <div class="question-content">

@@ -40,6 +40,17 @@ public class ThemDeThi extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=3)
+		{
+			response.setStatus(404);
+			return;
+		}
+		
 		String err = null;
 		DeThi dt = null;
 		java.util.List<ND_DeThi> list = null;
@@ -53,7 +64,6 @@ public class ThemDeThi extends HttpServlet {
 			 dt.setSoCauKho(soCauKho);
 			 dt.setSoCauTrungBinh(soCauTrungBinh);
 			 Connection conn = DBConnection.getMyConnection();
-			 HttpSession session = request.getSession();
 			 if(maMonHoc!=null) {
 				 list = DETHI_PLUS_DAO.TaoDeThi(conn, maMonHoc, soCauDe, soCauTrungBinh, soCauKho);
 				 MyUtils.setMonHoc(session, maMonHoc);
@@ -84,6 +94,17 @@ public class ThemDeThi extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=3) 
+		{
+			response.setStatus(404);
+			return;
+		}
+		
 		 String status="";
 		 try {
 			 String arr =  request.getParameter("arr");
@@ -92,7 +113,6 @@ public class ThemDeThi extends HttpServlet {
 			 Gson gsonn = new Gson();
 			 java.sql.Connection conn = DBConnection.getMyConnection();
 			 listdata = gsonn.fromJson(arr, ArrayList.class);
-			 HttpSession session = request.getSession();
 			 DeThi dt = new DeThi();
 			 dt.setMaDeThi(maDeThi);
 			 dt.setMaMonHoc(MyUtils.getMonHoc(session));

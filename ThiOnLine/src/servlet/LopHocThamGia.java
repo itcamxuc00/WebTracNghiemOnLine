@@ -10,13 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import beans.*;
 import connection.DBConnection;
-import utils.DBUtils;
-
-
+import utils.LOPHOC_DAO;
+import utils.MyUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -44,6 +43,16 @@ public class LopHocThamGia extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=2)
+		{
+			response.setStatus(404);
+			return;
+		}
 		List<LopHoc> list = null;
 		String responsejson = null;
 		String err = null;
@@ -51,7 +60,7 @@ public class LopHocThamGia extends HttpServlet {
 		{
 			Connection conn = DBConnection.getMyConnection();
 			String tentk = request.getParameter("TenTK");
-			list = DBUtils.LayDSLopHoc(conn, tentk);
+			list = LOPHOC_DAO.LayDSLopHoc(conn, tentk);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			responsejson = new Gson().toJson(list);

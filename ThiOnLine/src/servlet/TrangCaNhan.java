@@ -19,6 +19,7 @@ import beans.ThongTinTK;
 import connection.DBConnection;
 import utils.DBUtils;
 import utils.DETHI_PLUS_DAO;
+import utils.LOPHOC_DAO;
 import utils.MyUtils;
 
 /**
@@ -58,7 +59,7 @@ public class TrangCaNhan extends HttpServlet {
         	Connection conn = DBConnection.getMyConnection();
         	thongTinTK = DBUtils.LayThongTin(conn, loginedUser.getTenTK());
         	dsDeThi = DETHI_PLUS_DAO.LayDSDeThi(conn, loginedUser.getTenTK());
-        	dsLopHoc = DBUtils.LayDSLopHoc(conn, loginedUser.getTenTK());
+        	dsLopHoc = LOPHOC_DAO.LayDSLopHoc(conn, loginedUser.getTenTK());
         	request.setAttribute("dsDeThi", dsDeThi);
         	request.setAttribute("dsLopHoc", dsLopHoc);
         	request.setAttribute("user", thongTinTK);

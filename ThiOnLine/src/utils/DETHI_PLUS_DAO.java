@@ -125,11 +125,19 @@ public class DETHI_PLUS_DAO {
 		pstm.setString(2, deThi.getMaMonHoc());
 		pstm.executeUpdate();
 	}
-
+	
+	public static void DongDeThi(Connection conn, String deThi, String lop) throws SQLException
+	{
+		String sql = "delete from BG_DeThi where MaDeThi = ? and MaLop = ?";
+		PreparedStatement pstm = conn.prepareStatement(sql);
+		pstm.setString(1, deThi);
+		pstm.setString(2, lop);
+		pstm.executeUpdate();
+	}
+	
 	public static List<ND_DeThi> LayDeThi(Connection conn, String MaDe) throws SQLException {
 		String sql = "execute pr_LayDeThi '" + MaDe + "'";
 		PreparedStatement pstm = conn.prepareStatement(sql);
-		// pstm.setString(1, MaDe);
 		ResultSet rs = pstm.executeQuery();
 		List<ND_DeThi> list = new ArrayList<ND_DeThi>();
 		while (rs.next()) {
@@ -292,5 +300,5 @@ public class DETHI_PLUS_DAO {
 		}
 		return dapAn;
 	}
-
+	
 }

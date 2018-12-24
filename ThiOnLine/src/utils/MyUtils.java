@@ -19,7 +19,6 @@ public class MyUtils {
 	 
 	    // Lưu trữ thông tin người dùng đã login vào Session.
 	    public static void setTaiKhoanDangNhap(HttpSession session, TaiKhoan loginedUser) {
-	        // Trên JSP có thể truy cập thông qua ${loginedUser}
 	        session.setAttribute("loginedUser", loginedUser);
 	    }
 	    
@@ -81,7 +80,6 @@ public class MyUtils {
 	    
 	    // Lưu thông tin người dùng vào Cookie.
 	    public static void storeUserCookie(HttpServletResponse response, TaiKhoan user) {
-	        System.out.println("Store user cookie");
 	        Cookie cookieUserName = new Cookie(ATT_NAME_USER_NAME, user.getTenTK());
 	        // 1 ngày (Đã đổi ra giây)
 	        cookieUserName.setMaxAge(24 * 60 * 60);

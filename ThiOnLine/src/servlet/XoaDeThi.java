@@ -8,9 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import beans.TaiKhoan;
 import connection.DBConnection;
 import utils.DBUtils;
+import utils.MyUtils;
 
 /**
  * Servlet implementation class XoaDeThi
@@ -32,6 +35,17 @@ public class XoaDeThi extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+        TaiKhoan loginedUser = MyUtils.getTaiKhoanDangNhap(session);
+        if (loginedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+            return;}
+        else if(loginedUser.getQuyen()!=3)
+		{
+			response.setStatus(404);
+			return;
+		}
+		
 		String maDe = request.getParameter("maDe");
 		try {
 			Connection conn = DBConnection.getMyConnection();
